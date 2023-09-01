@@ -58,7 +58,7 @@ const AddMaterial = () => {
         return;
       }
 
-      const ipfsResponse = await UploadToIPFS(uploadedFile);
+      const ipfsResponse = await UploadToIPFS(uploadedFgiile);
       if (ipfsResponse.success) {
         // Get the IPFS hash
         const ipfsHash = ipfsResponse.data.hash;
@@ -74,7 +74,7 @@ const AddMaterial = () => {
         console.log(response)
 
         if (response.success) {
-          // Medicine created successfully, you can navigate to a success page or perform any other actions
+          
           alert("Rwa material add successfully");
         } else {
           alert("Failed to add raw material. Please try again.");

@@ -288,7 +288,7 @@ function ContractContextProvider(props) {
                 console.log("real account: ",account);
 
                 const response = await InventoryContract.methods
-                    .addRawMaterial(name, description, "string", quantity)
+                    .addRawMaterial(name, description, ipfs_hash, quantity)
                     .send({
                         from: account
                     });
