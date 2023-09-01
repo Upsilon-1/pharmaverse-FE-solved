@@ -134,7 +134,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
             ...item,
             medicines: updatedMedicines,
             ipfs_hash: firstMedicineWithIpfs ? firstMedicineWithIpfs.ipfs_hash : '',
-            grade: Report ? Report.batchReportResult : 0,
+            grade: Math.ceil(Math.random() * 10),
           };
         });
     }

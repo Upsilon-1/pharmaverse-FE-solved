@@ -31,15 +31,6 @@ const AddMaterial = () => {
   };
 
 
-  // const handleFileChange = (event) => {
-  //   const selectedImg = event.target.files[0];
-  //   if (selectedImg) {
-  //     setImg(URL.createObjectURL(selectedImg));
-  //   }
-  // };
-
-
-
   const handleCancelUpload = () => {
     setImg(null);
   };
@@ -49,7 +40,6 @@ const AddMaterial = () => {
     // Check if a file is uploaded
     try{
       if (!uploadedFile) {
-        alert("Please upload an image.");
         return;
       }
 

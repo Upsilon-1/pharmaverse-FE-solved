@@ -18,6 +18,8 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import AuthContextProvider from './Context/AuthContext';
 import ContractContextProvider from './Context/ContractContext';
+import { positions, transitions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 
 const { chains, publicClient } = configureChains(
   [mainnet, polygon, optimism, arbitrum, goerli, sepolia],
@@ -26,6 +28,12 @@ const { chains, publicClient } = configureChains(
     publicProvider(),
   ]
 );
+
+const options = {
+  timeout: 5000,
+  position: positions.BOTTOM_CENTER,
+  transition: transitions.SCALE,
+};
 
 const { connectors } = getDefaultWallets({
   appName: "PharmaVerse",
@@ -45,11 +53,13 @@ root.render(
   <BrowserRouter>
     <AuthContextProvider>
       <ContractContextProvider>
-        <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains}>
-            <App />
-          </RainbowKitProvider>
-        </WagmiConfig>
+        <AlertProvider template={AlertTemplate} {...options}>
+          <WagmiConfig config={wagmiConfig}>
+            <RainbowKitProvider chains={chains}>
+              <App />
+            </RainbowKitProvider>
+          </WagmiConfig>
+        </AlertProvider>
       </ContractContextProvider >
     </AuthContextProvider>
   </BrowserRouter>

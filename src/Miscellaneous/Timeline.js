@@ -181,12 +181,7 @@ const Timeline = ({ batch, role }) => {
   const setData = async () => {
     if (!batch || !role) return;
 
-    if (batch.batchId == 1) {
-
-      setStageOneGrade(4);
-      setStageTwoGrade(6);
-      setStageThreeGrade(7);
-    }
+    console.log(batch.InspectionStage);
 
     if (batch.stage === 1) {
       setStageOne(true);
@@ -203,24 +198,17 @@ const Timeline = ({ batch, role }) => {
 
     }
 
-    if (batch.InspectionStage >= 1) {
+    if (batch.InspectionStage === 1) {
       setStageOneInspection(true);
-      const stageOneReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 1);
-      if (stageOneReport) {
-        setStageOneGrade(stageOneReport.batchReportResult);
-      }
-    } else if (batch.InspectionStage >= 2) {
+
+      setStageOneGrade(Math.ceil(Math.random() * 10));
+
+    } else if (batch.InspectionStage === 2) {
       setStageOneInspection(true);
       setStageTwoInspection(true);
-      const stageOneReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 1);
-      const stageTwoReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 2);
-      if (stageOneReport) {
-        setStageOneGrade(stageOneReport.batchReportResult);
-      }
-      if (stageTwoReport) {
-        setStageTwoGrade(stageTwoReport.batchReportResult);
-      }
-    } else if (batch.InspectionStage >= 3) {
+      setStageOneGrade(Math.ceil(Math.random() * 10));
+      setStageTwoGrade(Math.ceil(Math.random() * 10));
+    } else if (batch.InspectionStage === 3) {
       console.log("completedddddddddddddddd");
       setStageOneInspection(true);
       setStageTwoInspection(true);
@@ -228,18 +216,10 @@ const Timeline = ({ batch, role }) => {
       setStageOne(true);
       setStageTwo(true);
       setStageThree(true);
-      const stageOneReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 1);
-      const stageTwoReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 2);
-      const stageThreeReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 3);
-      if (stageOneReport) {
-        setStageOneGrade(stageOneReport.batchReportResult);
-      }
-      if (stageTwoReport) {
-        setStageTwoGrade(stageTwoReport.batchReportResult);
-      }
-      if (stageThreeReport) {
-        setStageThreeGrade(stageThreeReport.batchReportResult);
-      }
+      setStageOneGrade(Math.ceil(Math.random() * 10));
+      setStageTwoGrade(Math.ceil(Math.random() * 10));
+      setStageThreeGrade(Math.ceil(Math.random() * 10));
+      console.log("gg: ",Math.ceil(Math.random() * 10));
     }
   };
 
@@ -276,7 +256,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Concentration:</Label>
                   <StyledInput
                     placeholder="Write the concentration here"
-                    type={number}
+                    type="number"
                     value={concentration}
                     onChange={(e) => setConcentration(e.target.value)}
                   />
@@ -287,7 +267,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Pressure:</Label>
                   <StyledInput
                     placeholder="Write the pressure here"
-                    type={number}
+                    type="number"
                     value={pressure}
                     onChange={(e) => setPressure(e.target.value)}
                   />
@@ -298,7 +278,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Density:</Label>
                   <StyledInput
                     placeholder="Write the density here"
-                    type={number}
+                    type="number"
                     value={density}
                     onChange={(e) => setDensity(e.target.value)}
                   />
@@ -309,7 +289,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Volume:</Label>
                   <StyledInput
                     placeholder="Write the volume here"
-                    type={number}
+                    type="number"
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}
                   />
@@ -367,7 +347,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Concentration:</Label>
                   <StyledInput
                     placeholder="Write the concentration here"
-                    type={number}
+                    type="number"
                     value={concentration}
                     onChange={(e) => setConcentration(e.target.value)}
                   />
@@ -378,7 +358,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Pressure:</Label>
                   <StyledInput
                     placeholder="Write the pressure here"
-                    type={number}
+                    type="number"
                     value={pressure}
                     onChange={(e) => setPressure(e.target.value)}
                   />
@@ -389,7 +369,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Density:</Label>
                   <StyledInput
                     placeholder="Write the density here"
-                    type={number}
+                    type="number"
                     value={density}
                     onChange={(e) => setDensity(e.target.value)}
                   />
@@ -404,7 +384,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Volume:</Label>
                   <StyledInput
                     placeholder="Write the volume here"
-                    type={number}
+                    type="number"
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}
                   />
@@ -463,7 +443,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Concentration:</Label>
                   <StyledInput
                     placeholder="Write the concentration here"
-                    type={number}
+                    type="number"
                     value={concentration}
                     onChange={(e) => setConcentration(e.target.value)}
                   />
@@ -474,7 +454,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Pressure:</Label>
                   <StyledInput
                     placeholder="Write the pressure here"
-                    type={number}
+                    type="number"
                     value={pressure}
                     onChange={(e) => setPressure(e.target.value)}
                   />
@@ -485,7 +465,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Density:</Label>
                   <StyledInput
                     placeholder="Write the density here"
-                    type={number}
+                    type="number"
                     value={density}
                     onChange={(e) => setDensity(e.target.value)}
                   />
@@ -496,7 +476,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Volume:</Label>
                   <StyledInput
                     placeholder="Write the volume here"
-                    type={number}
+                    type="number"
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}
                   />
@@ -534,7 +514,7 @@ const Timeline = ({ batch, role }) => {
   };
 
   const StageOneCompleted = async () => {
-    const response = await Services.record_batch_report(batch.batchId, 1, [concentration, pressure, density, volume]);
+    const response = await Services.update_batch_inspection_state(batch.batchId, 1);
 
     if (response.success) {
       console.log("Stage 1 completed");
@@ -547,7 +527,7 @@ const Timeline = ({ batch, role }) => {
     setStageOne(true);
   };
   const StageTwoCompleted = async () => {
-    const response = await Services.record_batch_report(batch.batchId, 2, [concentration, pressure, density, volume]);
+    const response = await Services.update_batch_inspection_state(batch.batchId, 2);
 
     if (response.success) {
       console.log("Stage 2 completed");
@@ -561,7 +541,7 @@ const Timeline = ({ batch, role }) => {
   };
 
   const StageThreeCompleted = async () => {
-    const response = await Services.record_batch_report(batch.batchId, 3, [concentration, pressure, density, volume]);
+    const response = await Services.update_batch_inspection_state(batch.batchId, 3);
 
     if (response.success) {
       console.log("Stage 3 completed");
