@@ -43,6 +43,10 @@ import { useEffect, useContext } from "react";
 import { ContractContext } from "../Context/ContractContext";
 import { AuthContext } from "../Context/AuthContext";
 import CONSTANTS from "../Utils/Constants";
+import Loader from './Loader/Loader';
+import { useAlert } from "react-alert";
+
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -173,6 +177,10 @@ const Timeline = ({ batch, role }) => {
   const [isStageOneContentFilled, setIsStageOneContentFilled] = useState(false);
   const [isStageTwoContentFilled, setIsStageTwoContentFilled] = useState(false);
   const [isPackingContentFilled, setIsPackingContentFilled] = useState(false);
+
+  const [isLoading, setisLoading] = useState(false);
+  const alert = useAlert()
+
 
   useEffect(() => {
     setData();
@@ -514,6 +522,7 @@ const Timeline = ({ batch, role }) => {
   };
 
   const StageOneCompleted = async () => {
+    setisLoading(true)
     const response = await Services.update_batch_inspection_state(batch.batchId, 1);
 
     if (response.success) {
@@ -525,8 +534,10 @@ const Timeline = ({ batch, role }) => {
     }
 
     setStageOne(true);
+    setisLoading(false)
   };
   const StageTwoCompleted = async () => {
+    setisLoading(true)
     const response = await Services.update_batch_inspection_state(batch.batchId, 2);
 
     if (response.success) {
@@ -538,9 +549,11 @@ const Timeline = ({ batch, role }) => {
     }
 
     setStageTwo(true);
+    setisLoading(false)
   };
 
   const StageThreeCompleted = async () => {
+    setisLoading(true)
     const response = await Services.update_batch_inspection_state(batch.batchId, 3);
 
     if (response.success) {
@@ -552,10 +565,11 @@ const Timeline = ({ batch, role }) => {
     }
 
     setStageThree(true);
+    setisLoading(false)
   };
 
   const StageOneInspectionCompleted = async () => {
-
+    setisLoading(true)
     const response = await Services.record_batch_report(batch.batchId, 1,);
 
     if (response.success) {
@@ -571,6 +585,8 @@ const Timeline = ({ batch, role }) => {
     setStageOneInspection(true);
     setOpenDialog(false);
     setSelectedStage(null);
+    setisLoading(false)
+
 
   };
 
@@ -592,6 +608,7 @@ const Timeline = ({ batch, role }) => {
     setSelectedStage(null);
   };
   const StageThreeInspectionCompleted = async () => {
+    setisLoading(true)
     const response = await Services.update_batch_inspection_state(batch.batchId, 3);
 
     if (response.success) {
@@ -603,6 +620,7 @@ const Timeline = ({ batch, role }) => {
       console.log("Error" + response.message);
       handleCloseDialog();
     }
+    setisLoading(false)
 
     setOpenDialog(false);
     setSelectedStage(null);
@@ -611,6 +629,8 @@ const Timeline = ({ batch, role }) => {
 
   return (
     <>
+    <Loader isLoading={isLoading} />
+    {!isLoading && (
       <VerticalTimeline>
         <VerticalTimelineElement
           className="vertical-timeline-element--work"
@@ -920,7 +940,7 @@ const Timeline = ({ batch, role }) => {
           contentArrowStyle={{ borderRight: "10px solid  rgb(16, 204, 82)" }}
           icon={<AssignmentTurnedInIcon />}
         />
-      </VerticalTimeline>
+      </VerticalTimeline>)}
 
       <Dialog
         maxWidth="md"

@@ -36,6 +36,9 @@ import {
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import { Fade } from "react-reveal";
+import Loader from './Loader/Loader';
+import { useAlert } from "react-alert";
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -65,6 +68,9 @@ export default function TransporterListCardRequests({ data }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedTransporter, setSelectedTransporter] = useState(null);
   const [selectedInspector, setSelectedInspector] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
+  const alert = useAlert();
+
 
   useEffect(() => {
     setData();
@@ -103,21 +109,24 @@ export default function TransporterListCardRequests({ data }) {
   };
 
   const handleSendPackage = async () => {
+    setisLoading(true)
     const response = await Services.update_package_state(data.packageId, 2);
 
     if (response.success) {
-      console.log("Successfully transported")
+      alert.success("Successfully transported")
       handleCloseDialog();
     }
     else{
-      console.log("Error" + response.message);
+      alert.error("Error" + response.message);
       handleCloseDialog();
     }
 
     handleCloseDialog();
+    setisLoading(false)
   };
 
-  return (
+  return (<>
+      {!isLoading && (
     <Fade bottom>
       <Card sx={{ maxWidth: 363, borderRadius: "24px", borderColor: "white" }}>
         <CardHeader title={data.packageId} subheader={`Manufacturer: ${data.manufacturerId.slice(0,20)}...`} />
@@ -257,6 +266,7 @@ export default function TransporterListCardRequests({ data }) {
           </DialogContent>
         </Dialog>
       </Card>
-    </Fade>
+    </Fade>)}
+    </>
   );
 }

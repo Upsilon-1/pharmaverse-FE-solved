@@ -39,6 +39,9 @@ import availabilityData from "../Availability.json";
 import transporterData from "../transporterData.json";
 import inspectorData from "../inspectorData.json";
 import { Fade } from "react-reveal";
+import Loader from "./Loader/Loader";
+import { useAlert } from "react-alert";
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -70,6 +73,10 @@ export default function SupplierListCardRequests({ data }) {
   const [selectedTransporter, setSelectedTransporter] = useState(null);
   const [selectedInspector, setSelectedInspector] = useState(null);
   const [allChemicalsAvailable, setAllChemicalsAvailable] = useState(false);
+  const [isloading,setIsloading]=useState(false)
+  
+
+  const alert = useAlert();
 
 
   useEffect(() => {
@@ -103,7 +110,7 @@ export default function SupplierListCardRequests({ data }) {
   const handleCheckAvailability = () => {
     setLoading(true);
     setTimeout( async () => {
-
+      
       const availabilityResults = await Promise.all(PackageRawMaterials.map(async (rawMaterial) => {
         console.log("rawMaterial: ", rawMaterial);
         const response = await Services.check_availibity(
@@ -145,19 +152,23 @@ export default function SupplierListCardRequests({ data }) {
     setOpenDialogDetalis(false);
   };
   const handleSendPackage = async () => {
+    setIsloading(true)
 
     const response = await Services.update_package_state(data.packageId, 1);
 
     if (response.success) {
-      console.log("Package sent successfully");
+      alert.success("Package sent successfully");
     }
     else{
-      console.log("Error" + response.message);
+      alert.error("Error" + response.message);
     }
+    setIsloading(false)
 
   };
 
-  return (
+  return (<>
+  <Loader isloading={isloading} />
+    {!isloading && (
     <Fade bottom>
       <Card sx={{ maxWidth: 363, borderRadius: "24px", borderColor: "white" }}>
         {/* <CardHeader title={data.name} subheader={data.manufacturer_id} /> */}
@@ -384,5 +395,7 @@ export default function SupplierListCardRequests({ data }) {
         </Dialog>
       </Card>
     </Fade>
+    )}
+    </>
   );
 }

@@ -13,12 +13,19 @@ import {
 import {  useContext} from "react";
 import { ContractContext } from "../Context/ContractContext";
 import { AuthContext } from "../Context/AuthContext";
+import Loader from './Loader/Loader';
+import { useAlert } from "react-alert";
+
+
 
 
 const RolesChanged = () => {
   const [role, setRole] = useState("");
   const [accountId, setAccountId] = useState("");
   const [deassignId, setDeassignId] = useState("");
+  const [isLoading, setisLoading] = useState(false);
+  const alert = useAlert();
+
 
 
   const { Services } = useContext(ContractContext);
@@ -37,9 +44,11 @@ const RolesChanged = () => {
     };
 
     const roleKey = roleMappings[event.target.value];
+    setisLoading(true)
 
     try {
       if (roleKey && accountId) {
+        
         await Services.assign_role(accountId, roleKey);
         // Role assigned successfully, you can show a success message or update the UI as needed.
         console.log(`Role ${event.target.value} assigned to account ${accountId}`);
@@ -48,9 +57,12 @@ const RolesChanged = () => {
       console.error("Error assigning role: ", error);
       // Handle error, show error message, etc.
     }
+    setisLoading(false)
   };
 
   const handleDeassignRole = async () => {
+    setisLoading(true)
+
     try {
       if (deassignId) {
         // Assuming you have a way to determine the role of the account you want to deassign.
@@ -72,9 +84,12 @@ const RolesChanged = () => {
       console.error("Error deassigning role: ", error);
       // Handle error, show error message, etc.
     }
+    setisLoading(false)
   };
 
-  return (
+  return (<>
+  <Loader isLoading={isLoading} />
+    {!isLoading && (
     <div style={{ padding: "20px" }}>
       <Typography
         variant="subtitle1"
@@ -172,7 +187,8 @@ const RolesChanged = () => {
           Send
         </Button>
       </Stack>
-    </div>
+    </div>)}
+    </>
   );
 };
 

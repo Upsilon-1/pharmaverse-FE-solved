@@ -33,6 +33,7 @@ import { useContext } from "react";
 import { ContractContext } from "../Context/ContractContext";
 import { AuthContext } from "../Context/AuthContext";
 import CONSTANTS from "../Utils/Constants";
+import Loader from './Loader/Loader';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -168,6 +169,10 @@ const CreateNewBatch = ({ jsonData }) => {
   const [selectedData, setselectedData] = useState([])
   // console.log("quantity inputs"+JSON.stringify(quantityInputs))
   console.log("selected data" + JSON.stringify(selectedData))
+  const [isLoading, setisLoading] = useState(false);
+
+
+
 
 
 
@@ -228,7 +233,7 @@ const CreateNewBatch = ({ jsonData }) => {
     // Send batch to blockchain
 
     if (!selectedTransporter || !selectedInspector || !selectedWholesaler || !concentrationStageOne || !concentrationStageTwo || !concentrationStageThree || !densityStageOne || !densityStageTwo || !densityStageThree || !volumeStageOne || !volumeStageTwo || !volumeStageThree || !pressureStageOne || !pressureStageTwo || !pressureStageThree) {
-      alert("Please fill in all fields correctly.");
+      alert.error("Please fill in all fields correctly.");
       return;
     }
     if (!account) {
@@ -251,6 +256,7 @@ const CreateNewBatch = ({ jsonData }) => {
 
 
     try {
+      setisLoading(true)
       const response = await Services.create_batch(
         medids,
         quantityarray,
@@ -270,14 +276,17 @@ const CreateNewBatch = ({ jsonData }) => {
       console.log(response);
 
       if (response.success) {
-        alert("Batch created successfully.");
+        alert.success("Batch created successfully.");
+        setisLoading(false)
       }
       else {
-        alert("Error creating batch.");
+        alert.error("Error creating batch.");
+        setisLoading(false)
       }
     }
     catch (error) {
-      console.log(error);
+      alert.error(error);
+      setisLoading(false)
     }
 
 
@@ -286,7 +295,10 @@ const CreateNewBatch = ({ jsonData }) => {
 
     setOpenDialog(false);
   };
-  return (
+  return (<>
+    <Loader isLoading={isLoading} />
+    {!isLoading && (
+
     <div>
       <div class="searchBox">
         <input
@@ -415,9 +427,13 @@ const CreateNewBatch = ({ jsonData }) => {
         </tbody>
       </table>
       <div className="button-container">
-        <button className="button0" onClick={handleCreateButtonClick}>
-          <p>Create Batch</p>
-        </button>
+      <button
+  className="button0"
+  onClick={handleCreateButtonClick}
+  disabled={selectedRows.length?false:true}
+>
+  <p>Create Batch</p>
+</button>
       </div>
       <Dialog
         fullScreen
@@ -770,7 +786,7 @@ const CreateNewBatch = ({ jsonData }) => {
             )}
         </DialogActions>
       </Dialog>
-    </div>
+    </div>)}</>
   );
 };
 

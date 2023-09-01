@@ -38,6 +38,9 @@ import {
 import Slide from "@mui/material/Slide";
 import { Fade } from "react-reveal";
 import Timeline from "./Timeline";
+import Loader from './Loader/Loader';
+import { useAlert } from "react-alert";
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -66,6 +69,9 @@ export default function TransportBatchListRequests({ data }) {
   const [selectedTransporter, setSelectedTransporter] = useState(null);
   const [selectedInspector, setSelectedInspector] = useState(null);
   const [selectedWholesaler, setSelectedWholesaler] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
+  const alert = useAlert();
+
 
 
 
@@ -85,21 +91,29 @@ export default function TransportBatchListRequests({ data }) {
     setOpenDialog(false);
   };
   const handleSendPackage = async (ID) => {
+    setisLoading(true)
     const response = await Services.update_batch_state(ID, 4);
 
     if (response.success) {
       console.log("Batch sent Success");
+      alert.success("Batch sent Success");
       handleCloseDialog();
     }
     else {
       console.log("Error" + response.message);
+      alert.error("Error" + response.message);
       handleCloseDialog();
 
       handleCloseDialog();
     };
+    setisLoading(false)
   };
 
   return (
+    <>
+        <Loader isLoading={isLoading} />
+        {!isLoading && (
+
     <Fade bottom>
       <>
         {data.map((batch, index) => (
@@ -246,7 +260,8 @@ export default function TransportBatchListRequests({ data }) {
 
         ))}
       </>
-    </Fade>
+    </Fade>)}
+    </>
   );
 
 }

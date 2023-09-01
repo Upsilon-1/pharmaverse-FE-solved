@@ -48,6 +48,9 @@ import { Fade } from "react-reveal";
 import { useEffect, useContext } from "react";
 import { ContractContext } from "../Context/ContractContext";
 import { AuthContext } from "../Context/AuthContext";
+import { useAlert } from "react-alert";
+import Loader from './Loader/Loader';
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -87,6 +90,10 @@ export default function InspectorListCardRequests({ data }) {
   const [cardDisabled, setCardDisabled] = useState(
     new Array(data.rawMaterials.length).fill(false)
   );
+  const [isLoading, setisLoading] = useState(false);
+
+
+  const alert = useAlert();
 
   useEffect(() => {
     setData();
@@ -148,17 +155,19 @@ export default function InspectorListCardRequests({ data }) {
     const concentrationarray= cardStates.map((item) => Number(item.concentration));
     console.log("concentrationarray"+JSON.stringify(concentrationarray));
     // console.log("ID; ",data.packageId)
+    setisLoading(true)
 
     const response = await Services.check_quality_of_package(data.packageId,remarks,chemicalquantity,concentrationarray);
 
     if (response.success) {
-      console.log("success");
+      alert.success("success");
       handleCloseDialog();
     }
     else{
-      console.log("Error" + response.message);
+      alert.error("Error" + response.message);
       handleCloseDialog();
     }
+    setisLoading(false)
 
   }
   const handleSaveClick = async (cardIndex) => {
@@ -188,7 +197,9 @@ export default function InspectorListCardRequests({ data }) {
 
   const allCardsSaved = cardSaveClicks.every((click) => click);
 
-  return (
+  return (<>
+  <Loader isLoading={isLoading} />
+    {!isLoading && (
     <Fade bottom>
       <Card sx={{ maxWidth: 363, borderRadius: "24px", borderColor: "white" }}>
         <CardHeader title={data.packageId} subheader={data.manufacturer_id} />
@@ -345,6 +356,7 @@ export default function InspectorListCardRequests({ data }) {
           </DialogContent>
         </Dialog>
       </Card>
-    </Fade>
+    </Fade>)}
+    </>
   );
 }

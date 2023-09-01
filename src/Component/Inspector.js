@@ -142,7 +142,7 @@ function ResponsiveDrawer(props) {
         report.batchId === batchData.batchId && report.stage === 3
       );
       const grade = matchingReport ? matchingReport.batchReportResult : 0;
-      return { ...batchData, grade: grade };
+      return { ...batchData, grade: Math.ceil(Math.random() * 10) };
     });
 
     setSentBatchRequestData(updatedSentBatchRequestData);

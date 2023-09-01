@@ -30,34 +30,41 @@ import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { ContractContext } from "../Context/ContractContext";
 import { useNavigate } from "react-router-dom";
+import { useAlert } from "react-alert";
+import Loader from "../Miscellaneous/Loader/Loader";
 
 
 const HomePage = () => {
+  const alert = useAlert();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const isMobile = useMediaQuery("(max-width: 906px)");
   const [activeTab, setActiveTab] = useState("overview");
   const [activeService, setActiveService] = useState("web");
   const { Services } = useContext(ContractContext);
   const navigate = useNavigate();
   const { authenticate, deauthenticate, account, role } = useContext(AuthContext);
-
   useAccount({
     onConnect: async (accounts) => {
       console.log(accounts.address);
-
+      setisLoading(true);
       const res = await Services.get_role(accounts.address);
       if (res.success) {
         console.log("res.data issssss:" + res.data)
         authenticate(accounts.address, res.data);
+        alert.success("Connected Successfully !!")
       }
       else {
         authenticate(accounts.address, '');
+        alert.error("Unable to Connect");
       }
+      setisLoading(false)
     },
     onDisconnect: () => {
 
       console.log("disconnected")
       deauthenticate();
+      alert.success("Disconnected Successfully !!")
     },
   });
 
@@ -113,8 +120,10 @@ const HomePage = () => {
   ];
 
   return (
-
-    <div style={{ margin: "0" }}>
+    <>
+    <Loader isLoading={isLoading} />
+    {!isLoading && (
+      <div style={{ margin: "0" }}>
 
       <section class="hero">
         <div class="main-width">
@@ -207,8 +216,8 @@ const HomePage = () => {
                   onClick={() => {
                     switch (role) {
                       case "Supplier":
+                        // navigate("/supplier")
                         navigate("/supplier")
-                        // navigate("/inventory")
                         break;
                       case "Transporter":
                         navigate("/transporter");
@@ -305,7 +314,9 @@ const HomePage = () => {
         <p>© 2023 Upsilon - All Rights Reserved</p>{" "}
       </div>
     </div>
-
+    )}
+ 
+ </>
   );
 };
 export default HomePage;

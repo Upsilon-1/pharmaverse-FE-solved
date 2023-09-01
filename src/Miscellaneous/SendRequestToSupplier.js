@@ -3,13 +3,16 @@ import { useContext } from "react";
 import { ContractContext } from "../Context/ContractContext";
 import { AuthContext } from "../Context/AuthContext";
 import CONSTANTS from '../Utils/Constants';
+import Loader from './Loader/Loader';
+import { useAlert } from 'react-alert';
 
 
 const SendRequestToSupplier = ({ }) => {
+  const alert = useAlert();
   const [selectedRows, setSelectedRows] = useState([]);
   const [quantityInputs, setQuantityInputs] = useState({});
   const [searchValue, setSearchValue] = useState("");
-
+  const [isLoading, setisLoading] = useState(false);
   const { Services, rawMaterials } = useContext(ContractContext);
   const { account } = useContext(AuthContext);
 
@@ -30,7 +33,7 @@ const SendRequestToSupplier = ({ }) => {
   const handleCreateButtonClick = async () => {
     // Check if entered quantity exceeds given quantity
     // const selectedData = meds.filter(item => selectedRows.includes(item.name));
-
+setisLoading(true)
     const selectedData = rawMaterials.filter(item => selectedRows.includes(item.name));
     console.log("Selected data is1: ", JSON.stringify(selectedData));
 
@@ -58,17 +61,19 @@ const SendRequestToSupplier = ({ }) => {
       "0xAB6bDA0a4e847Af362d54f88cC3663C219688c27",
       "0x85B6B5d0838569C23c3418D1dB5989242C911208",
       "0xE8Dc9F3cecc1E7DD7737001f1987cc2813246A93");
-
+setisLoading(false)
     if (response.status) {
-      alert("req sent")
+      alert.success("Request Sent")
     } else {
-      alert("req failed")
+      alert.error("RequesF failed")
     }
 
   };
 
   return (
-    <div>
+    <>
+    <Loader isLoading={isLoading} />
+    {!isLoading && (<div>
       <div class="searchBox">
 
         <input class="searchInput" type="text" name="" placeholder="Search something"
@@ -142,9 +147,10 @@ const SendRequestToSupplier = ({ }) => {
         </tbody>
       </table>
       <div className='button-container'>
-        <button className='button0' onClick={handleCreateButtonClick}><p>Send Request</p></button>
+        <button className='button0' onClick={handleCreateButtonClick}   disabled={selectedRows.length?false:true}><p>Send Request</p></button>
       </div>
-    </div>
+    </div>)}
+    </>
   );
 }
 

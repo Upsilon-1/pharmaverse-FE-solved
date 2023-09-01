@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { ContractContext } from "../Context/ContractContext";
 import { useContext } from "react";
 import { UploadToIPFS } from "../Utils/UploadToIpfs";
+import Loader from './Loader/Loader';
+
 
 const CreateMed = () => {
   const { Services } = useContext(ContractContext); // Access the create_medicine function from the context
@@ -11,6 +13,8 @@ const CreateMed = () => {
   const [description, setDescription] = useState("");
   const [img, setImg] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
+
 
   const handleFileChange = (event) => {
     const selectedImg = event.target.files[0];
@@ -36,50 +40,59 @@ const CreateMed = () => {
 
     // Check if any required fields are empty
     if (!name || !description) {
-      alert("Please fill in all fields correctly.");
+      alert.error("Please fill in all fields correctly.");
       return;
     }
 
     // Check if a file is uploaded
     if (!uploadedFile) {
-      alert("Please upload an image.");
+      alert.error("Please upload an image.");
       return;
     }
 
     try {
+      setisLoading(true)
       const ipfsResponse = await UploadToIPFS(uploadedFile);
 
       if (ipfsResponse.success) {
         // Get the IPFS hash
         const ipfsHash = ipfsResponse.data.hash;
+        setisLoading(false)
         
 
         console.log(ipfsHash)
 
         // Call create_medicine function with form data and IPFS hash
+        setisLoading(true)
         const response = await Services.create_medicine(
           name,
           description,
           ipfsHash
         );
         console.log(response)
+        setisLoading(false)
 
         if (response.success) {
           // Medicine created successfully, you can navigate to a success page or perform any other actions
-          alert("Medicine created successfully");
+          alert.success("Medicine created successfully");
         } else {
-          alert("Failed to create medicine. Please try again.");
+          alert.error("Failed to create medicine. Please try again.");
         }
       } else {
-        alert("Failed to upload the file to IPFS. Please try again.");
+        alert.error("Failed to upload the file to IPFS. Please try again.");
       }
     } catch (error) {
       console.error("Error creating medicine: ", error);
-      alert("Error creating medicine. Please try again.");
+      alert.error("Error creating medicine. Please try again.");
+      setisLoading(false)
     }
+    setisLoading(false)
   };
 
-  return (
+  return (<>
+    <Loader isLoading={isLoading} />
+    {!isLoading &&(
+
     <div>
       <form className="form">
         <span className="title">Create Medicine</span>
@@ -147,7 +160,8 @@ const CreateMed = () => {
           </button>
         </div>
       </form>
-    </div>
+    </div>)}
+    </>
   );
 };
 

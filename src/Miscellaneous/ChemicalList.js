@@ -179,6 +179,7 @@ const ChemicalList = () => {
   const [xAxisData, setxaxisdata] = useState([]);
 
   useEffect(() => {
+    
     const fetchRawMaterials = async () => {
       console.log("Chemical list raw materials: ", rawMaterials);
       setRawmat(rawMaterials)
