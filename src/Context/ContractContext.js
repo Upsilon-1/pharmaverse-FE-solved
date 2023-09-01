@@ -185,6 +185,7 @@ function ContractContextProvider(props) {
         },
         get_all_medicines: async () => {
             try {
+                console.log("called");
                 // Ensure that ManufacturerContract is available
                 if (!ManufacturerContract) {
                     console.error("ManufacturerContract not initialized");
@@ -195,6 +196,7 @@ function ContractContextProvider(props) {
                 const medicineCount = await ManufacturerContract.methods
                     .medicineCount()
                     .call();
+                    console.log("medicineCount: ", medicineCount);
                 const medicineList = [];
 
                 // Loop through the medicines and fetch each one
@@ -202,6 +204,7 @@ function ContractContextProvider(props) {
                     const medicineInfo = await ManufacturerContract.methods
                         .medicines(i)
                         .call();
+                        console.log("medicineInfo: ", medicineInfo);
                     medicineList.push({
                         medicineId: Number(medicineInfo[0]),
                         name: medicineInfo[1],
@@ -246,7 +249,7 @@ function ContractContextProvider(props) {
 
                     for (let j = 0; j < medicineIds.length; j++) {
                         medicines.push({
-                            materialId: Number(medicineIds[j]),
+                            medicineId: Number(medicineIds[j]),
                             quantity: Number(medicineQuantities[j]),
                         });
                     }
@@ -1063,7 +1066,7 @@ function ContractContextProvider(props) {
                 }
 
                 await ManufacturerContract.methods
-                    .requestRawMaterialPackage(
+                    .createBatch(
                         _medicineIds,
                         _medicineQuantities,
                         estimatedCost,

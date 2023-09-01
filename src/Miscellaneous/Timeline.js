@@ -214,6 +214,7 @@ const Timeline = ({ batch, role }) => {
         setStageTwoGrade(stageTwoReport.batchReportResult);
       }
     } else if (batch.InspectionStage === 3) {
+      console.log("completedddddddddddddddd");
       setStageOneInspection(true);
       setStageTwoInspection(true);
       setStageThreeInspection(true);
@@ -816,7 +817,7 @@ const Timeline = ({ batch, role }) => {
             >
              {!stageTwoInspection && role == "inspector" && <>Do Inspection</>}
               {!stageTwoInspection && role != "inspector" && <>Yet to be Inspected</>}
-              {stageOneInspection && <>Inspected...</>}
+              {stageTwoInspection && <>Inspected...</>}
             </Button>
           </Stack>
         </VerticalTimelineElement>

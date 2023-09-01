@@ -151,20 +151,21 @@ const CreateNewBatch = ({ jsonData }) => {
   const [selectedTransporter, setSelectedTransporter] = useState(null);
   const [selectedInspector, setSelectedInspector] = useState(null);
   const [selectedWholesaler, setSelectedWholesaler] = useState(null);
-  const [concentrationStageOne, setConcentrationStageOne] = useState("");
-  const [pressureStageOne, setPressureStageOne] = useState("");
-  const [densityStageOne, setDensityStageOne] = useState("");
-  const [volumeStageOne, setVolumeStageOne] = useState("");
-  const [concentrationStageTwo, setConcentrationStageTwo] = useState("");
-  const [pressureStageTwo, setPressureStageTwo] = useState("");
-  const [densityStageTwo, setDensityStageTwo] = useState("");
-  const [volumeStageTwo, setVolumeStageTwo] = useState("");
-  const [concentrationStageThree, setConcentrationStageThree] = useState("");
-  const [pressureStageThree, setPressureStageThree] = useState("");
-  const [densityStageThree, setDensityStageThree] = useState("");
-  const [volumeStageThree, setVolumeStageThree] = useState("");
+  const [concentrationStageOne, setConcentrationStageOne] = useState(0);
+  const [pressureStageOne, setPressureStageOne] = useState(0);
+  const [densityStageOne, setDensityStageOne] = useState(0);
+  const [volumeStageOne, setVolumeStageOne] = useState(0);
+  const [concentrationStageTwo, setConcentrationStageTwo] = useState(0);
+  const [pressureStageTwo, setPressureStageTwo] = useState(0);
+  const [densityStageTwo, setDensityStageTwo] = useState(0);
+  const [volumeStageTwo, setVolumeStageTwo] = useState(0);
+  const [concentrationStageThree, setConcentrationStageThree] = useState(0);
+  const [pressureStageThree, setPressureStageThree] = useState(0);
+  const [densityStageThree, setDensityStageThree] = useState(0);
+  const [volumeStageThree, setVolumeStageThree] = useState(0);
+  const [estimatedcost, setestimatedcost] = useState(0)
+  const [productionRatePerDay, setproductionRatePerDay] = useState(0)
   const [selectedData, setselectedData] = useState([])
-
   // console.log("quantity inputs"+JSON.stringify(quantityInputs))
   console.log("selected data" + JSON.stringify(selectedData))
 
@@ -238,27 +239,37 @@ const CreateNewBatch = ({ jsonData }) => {
     const idealstage2conditions = [concentrationStageTwo, pressureStageTwo, densityStageTwo, volumeStageTwo];
     const idealstage3conditions = [concentrationStageThree, pressureStageThree, densityStageThree, volumeStageThree];
 
-    const medids = selectedData.map((item) => item.medicienID);
+    console.log("idealstage1conditions" + idealstage1conditions);
+    console.log("idealstage2conditions" + idealstage2conditions);
+    console.log("idealstage3conditions" + idealstage3conditions);
+    console.log("selectedData: ",selectedData);
+
+    const medids = selectedData.map((item) => item.medicineId);
     const quantityarray = selectedData.map((item) => quantityInputs[item.name]);
+    console.log("medids" + medids);
+    console.log("quantityarray" + quantityarray);
 
 
     try {
       const response = await Services.create_batch(
         medids,
         quantityarray,
-        //estimatedcost, // take from constants
-        //productionRatePerDay, // take from constants
+        estimatedcost, 
+        productionRatePerDay, 
         idealstage1conditions,
         idealstage2conditions,
         idealstage3conditions,
-        selectedInspector.id,
-        selectedTransporter.id,
-        selectedWholesaler.id,
+        // selectedInspector.id,
+        // selectedTransporter.id,
+        // selectedWholesaler.id,
+        "0xE8Dc9F3cecc1E7DD7737001f1987cc2813246A93",
+        "0xAB6bDA0a4e847Af362d54f88cC3663C219688c27",
+        "0x511F0e5A8495d7c7709f905186A01751D8b3f7C8"
 
       );
       console.log(response);
 
-      if (response.status) {
+      if (response.success) {
         alert("Batch created successfully.");
       }
       else {
@@ -451,6 +462,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Concentration:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the concentration here"
                           value={concentrationStageOne}
                           onChange={(e) =>
@@ -463,6 +475,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Pressure:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the pressure here"
                           value={pressureStageOne}
                           onChange={(e) => setPressureStageOne(e.target.value)}
@@ -474,6 +487,7 @@ const CreateNewBatch = ({ jsonData }) => {
                         <Label>Density:</Label>
                         <StyledInput
                           placeholder="Write the density here"
+                          type="number"
                           value={densityStageOne}
                           onChange={(e) => setDensityStageOne(e.target.value)}
                         />
@@ -483,6 +497,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Volume:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the volume here"
                           value={volumeStageOne}
                           onChange={(e) => setVolumeStageOne(e.target.value)}
@@ -505,6 +520,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Concentration:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the concentration here"
                           value={concentrationStageTwo}
                           onChange={(e) =>
@@ -517,6 +533,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Pressure:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the pressure here"
                           value={pressureStageTwo}
                           onChange={(e) => setPressureStageTwo(e.target.value)}
@@ -527,6 +544,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Density:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the density here"
                           value={densityStageTwo}
                           onChange={(e) => setDensityStageTwo(e.target.value)}
@@ -537,6 +555,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Volume:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the volume here"
                           value={volumeStageTwo}
                           onChange={(e) => setVolumeStageTwo(e.target.value)}
@@ -559,6 +578,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Concentration:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the concentration here"
                           value={concentrationStageThree}
                           onChange={(e) =>
@@ -571,6 +591,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Pressure:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the pressure here"
                           value={pressureStageThree}
                           onChange={(e) =>
@@ -583,6 +604,7 @@ const CreateNewBatch = ({ jsonData }) => {
                       <FormControl defaultValue="" required>
                         <Label>Density:</Label>
                         <StyledInput
+                        type="number"
                           placeholder="Write the density here"
                           value={densityStageThree}
                           onChange={(e) => setDensityStageThree(e.target.value)}
@@ -599,6 +621,41 @@ const CreateNewBatch = ({ jsonData }) => {
                         />
                         <HelperText />
                       </FormControl>
+                    </Stack>
+
+                    <Stack
+                      direction="row"
+                      gap={2}
+                      sx={{ justifyContent: "flex-start", flexWrap: "wrap", marginTop: "20px" }}
+                    >
+                      <FormControl defaultValue={0} required>
+                        <Label>Estimated Cost for the batch:</Label>
+                        <StyledInput
+                        
+                          placeholder="Write the Estimated Cost here"
+                          type="number"
+                          value={estimatedcost}
+                          onChange={(e) =>
+                            setestimatedcost(e.target.value)
+                          }
+                        />
+                        <HelperText />
+                      </FormControl>
+                      <FormControl defaultValue="" required>
+                        <Label>Current Production rate (per day):</Label>
+                        <StyledInput
+                        type="number"
+                          placeholder="Write the Production rate here"
+                          value={productionRatePerDay}
+                          onChange={(e) =>
+                            setproductionRatePerDay(e.target.value)
+                          }
+                        />
+                        <HelperText />
+                      </FormControl>
+
+
+
                     </Stack>
 
                     <Divider sx={{ marginTop: "20px", marginBottom: "24px" }} />
@@ -706,7 +763,7 @@ const CreateNewBatch = ({ jsonData }) => {
             volumeStageThree &&
             pressureStageOne &&
             pressureStageTwo &&
-            pressureStageThree && (
+            pressureStageThree && estimatedcost && productionRatePerDay && (
               <Button color="primary" autoFocus onClick={handleSendBatch}>
                 Send
               </Button>

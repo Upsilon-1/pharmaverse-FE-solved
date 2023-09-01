@@ -53,11 +53,10 @@ const OngoingBatches = () => {
   }, [batches, medicines]);
 
   const setData = async () => {
-    if (!batches || !account|| !medicines) return;
+    if (!batches || !account || !medicines) return;
 
     const updatedBatches = batches
-      .filter((item) => item.manufacturerId === account && item.stage !== 5 && item.InspectionStage !== 4)
-      .map((item) => {
+      .filter((item) => item.manufacturerId === account &&  item.InspectionStage !== 3).map((item) => {
         const updatedMedicines = item.medicines.map((medicine) => {
           const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);
           if (matchedMedicine) {
@@ -68,17 +67,21 @@ const OngoingBatches = () => {
           } else {
             return medicine;
           }
-        });;
+        });
+        console.log("updatedMedicines: ", updatedMedicines);
+        const firstMedicineWithIpfs = medicines.map((item)=>item.medicineId===updatedMedicines[0].medicineId?item.ipfs_hash:null).filter((item)=>item!==null)[0];
 
         // Find the first medicine with a matching ipfs_hash
-        const firstMedicineWithIpfs = updatedMedicines.find((medicine) => medicine.ipfs_hash);
+        // const firstMedicineWithIpfs = updatedMedicines[0].ipfs_hash;
+        console.log("firstMedicineWithIpfs: ", firstMedicineWithIpfs);
 
         return {
           ...item,
           medicines: updatedMedicines,
-          ipfs_hash: firstMedicineWithIpfs ? firstMedicineWithIpfs.ipfs_hash : '',
+          ipfs_hash: firstMedicineWithIpfs ? firstMedicineWithIpfs : '',
         };
       });
+    console.log("updatedBatches: ", updatedBatches);
 
     setOngoingBatches(updatedBatches);
   };
@@ -99,7 +102,7 @@ const OngoingBatches = () => {
     setOpenDialog(false);
   };
   const handleSendPackage = () => {
-    
+
     setOpenDialog(false);
   };
   return (
@@ -266,30 +269,30 @@ const OngoingBatches = () => {
 
                     <Divider sx={{ marginTop: "10px", marginBottom: "24px" }} />
                     <div>
-                          <Card
-                            sx={{ marginBottom: "16px" }}
-                          >
-                            <CardHeader
-                              title= "Transporter"
-                              subheader={selectedBatch.transporterId}
-                            />
-                          </Card>
+                      <Card
+                        sx={{ marginBottom: "16px" }}
+                      >
+                        <CardHeader
+                          title="Transporter"
+                          subheader={selectedBatch.transporterId}
+                        />
+                      </Card>
                     </div>
                     <div>
-                          <Card sx={{ marginBottom: "16px" }}>
-                            <CardHeader
-                               title= "Inspector"
-                               subheader={selectedBatch.inspectorId}
-                            />
-                          </Card>
+                      <Card sx={{ marginBottom: "16px" }}>
+                        <CardHeader
+                          title="Inspector"
+                          subheader={selectedBatch.inspectorId}
+                        />
+                      </Card>
                     </div>
                     <div>
-                          <Card sx={{ marginBottom: "16px" }}>
-                            <CardHeader
-                              title= "Wholesaler"
-                              subheader={selectedBatch.wholesalerId}
-                            />
-                          </Card>
+                      <Card sx={{ marginBottom: "16px" }}>
+                        <CardHeader
+                          title="Wholesaler"
+                          subheader={selectedBatch.wholesalerId}
+                        />
+                      </Card>
                     </div>
                   </CardContent>
                 </CardActionArea>

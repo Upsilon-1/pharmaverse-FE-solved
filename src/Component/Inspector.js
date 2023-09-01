@@ -123,7 +123,7 @@ function ResponsiveDrawer(props) {
     // *********************
     console.log("batches: ",batches);
     const sentRequestsBatch = batches
-      .filter((item) => item.inspectorId === account && item.InspectionStage === 4 ) // 
+      .filter((item) => item.inspectorId === account && item.InspectionStage === 3 ) // 
       .map((item) => {
         const medicineId = item.medicines[0].medicineId; // Get the medicineId from the first object
         const medicine = medicines.find((rm) => rm.medicineId === medicineId); // Find the medicine with matching id
@@ -145,7 +145,7 @@ function ResponsiveDrawer(props) {
     console.log("updatedSentBatchRequestData: ",updatedSentBatchRequestData);
 
     const receivedRequestsBatch = batches
-      .filter((item) => item.inspectorId === account && item.InspectionStage !== 4 )  // 
+      .filter((item) => item.inspectorId === account && item.InspectionStage !== 3 )  // 
       .map((item) => {
         const medicineId = item.medicines[0].medicineId; // Get the materialId from the first object
 

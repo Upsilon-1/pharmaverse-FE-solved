@@ -9,7 +9,6 @@ const CreateMed = () => {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState(0);
   const [img, setImg] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
 
@@ -32,15 +31,11 @@ const CreateMed = () => {
     setDescription(event.target.value);
   };
 
-  const handleQuantityChange = (event) => {
-    setQuantity(event.target.value);
-  };
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     // Check if any required fields are empty
-    if (!name || !description || quantity <= 0) {
+    if (!name || !description) {
       alert("Please fill in all fields correctly.");
       return;
     }
@@ -101,15 +96,6 @@ const CreateMed = () => {
           placeholder="Medicine Description"
           value={description}
           onChange={handleDescriptionChange}
-        />
-        <input
-          type="number"
-          min="0"
-          className="input"
-          placeholder="Material Quantity"
-          style={{ width: "90%" }}
-          value={quantity}
-          onChange={handleQuantityChange}
         />
 
         <div className="addsubmit">

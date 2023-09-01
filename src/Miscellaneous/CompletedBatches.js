@@ -56,7 +56,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
 
     if (isAdmin) {
       updatedBatches = batches
-        .filter((item) => item.stage === 5 && item.InspectionStage === 4)
+        .filter((item) => item.stage === 5 && item.InspectionStage === 3)
         .map((item) => {
           const updatedMedicines = item.medicines.map((medicine) => {
             const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);
@@ -84,7 +84,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
     }
     else if (isWholesaler) {
       updatedBatches = batches
-        .filter((item) => item.wholesalerId === account && item.stage === 5 && item.InspectionStage === 4)
+        .filter((item) => item.wholesalerId === account && item.stage === 5 && item.InspectionStage === 3)
         .map((item) => {
           const updatedMedicines = item.medicines.map((medicine) => {
             const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);
@@ -112,7 +112,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
     }
     else {
       updatedBatches = batches
-        .filter((item) => item.manufacturerId === account && item.stage === 5 && item.InspectionStage === 4)
+        .filter((item) => item.manufacturerId === account && item.InspectionStage === 3)
         .map((item) => {
           const updatedMedicines = item.medicines.map((medicine) => {
             const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);

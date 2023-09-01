@@ -107,8 +107,8 @@ const MedicineList = () => {
         </button>
       </div>
       <div className='allcards' >
-        {/* .filter((item) =>item.name.toLowerCase().includes(searchValue.toLowerCase())) */}
-        {medicinesData && medicinesData.map((medicine, index) => (
+        
+        {medicinesData && medicinesData.filter((item) =>item.name.toLowerCase().includes(searchValue.toLowerCase())).map((medicine, index) => (
           <div className='card' key={index} style={{ cursor: "pointer", backgroundImage: `url(${CONSTANTS.IPFSURL}/${medicine.ipfs_hash})` }}>
             <p className="card__title">{medicine.name}</p>
             <div className="card__content">
