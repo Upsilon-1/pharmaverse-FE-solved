@@ -58,7 +58,7 @@ const AddMaterial = () => {
         return;
       }
 
-      const ipfsResponse = await UploadToIPFS(uploadedFgiile);
+      const ipfsResponse = await UploadToIPFS(uploadedFile);
       if (ipfsResponse.success) {
         // Get the IPFS hash
         const ipfsHash = ipfsResponse.data.hash;

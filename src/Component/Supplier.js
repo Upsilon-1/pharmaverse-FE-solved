@@ -104,7 +104,7 @@ function ResponsiveDrawer(props) {
     console.log("packages: ",packages);
 
     const receivedRequests = packages
-      .filter((item) => item.supplierId === account && item.stage === 3)
+      .filter((item) => item.supplierId === account && item.stage === 0)
       .map((item) => {
         const materialId = item.rawMaterials[0]?.materialId; // Get the materialId from the first object
         const rawMaterial = rawMaterials.find((rm) => rm.materialId === materialId); // Find the raw material with matching id
@@ -118,7 +118,7 @@ function ResponsiveDrawer(props) {
     setReceivedRequestData(receivedRequests);
 
     const sentRequests = packages
-      .filter((item) => item.supplierId === account && item.stage === 0)
+      .filter((item) => item.supplierId === account && item.stage !== 0)
       .map((item) => {
         const materialId = item.rawMaterials[0].materialId; // Get the materialId from the first object
         const rawMaterial = rawMaterials.find((rm) => rm.materialId === materialId); // Find the raw material with matching id

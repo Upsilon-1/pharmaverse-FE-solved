@@ -207,7 +207,7 @@ const HomePage = () => {
                   onClick={() => {
                     switch (role) {
                       case "Supplier":
-                        navigate("/inventory")
+                        navigate("/supplier")
                         break;
                       case "Transporter":
                         navigate("/transporter");

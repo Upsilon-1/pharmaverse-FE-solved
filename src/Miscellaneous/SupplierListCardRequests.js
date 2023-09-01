@@ -105,12 +105,15 @@ export default function SupplierListCardRequests({ data }) {
     setTimeout( async () => {
 
       const availabilityResults = await Promise.all(PackageRawMaterials.map(async (rawMaterial) => {
+        console.log("rawMaterial: ", rawMaterial);
         const response = await Services.check_availibity(
           rawMaterial.materialId,
           rawMaterial.quantity
         );
-        return response.success;
+        return !response.success;
       }));
+
+      console.log("availabilityResults: ", availabilityResults);
       
   
       // Check if all raw materials are available
@@ -147,16 +150,10 @@ export default function SupplierListCardRequests({ data }) {
 
     if (response.success) {
       console.log("Package sent successfully");
-      handleCloseDialog();
-
-
     }
     else{
       console.log("Error" + response.message);
-      handleCloseDialog();
     }
-
-    handleCloseDialog();
 
   };
 
@@ -246,7 +243,7 @@ export default function SupplierListCardRequests({ data }) {
                 variant="contained"
                 endIcon={<SendIcon />}
                 disabled={!allChemicalsAvailable}
-                onClick={handleOpenDialog}
+                onClick={()=>{handleSendPackage()}}
                 sx={{ borderRadius: "50px" }}
                 color="success"
               >

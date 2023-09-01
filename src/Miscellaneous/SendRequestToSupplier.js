@@ -13,22 +13,6 @@ const SendRequestToSupplier = ({ }) => {
   const { Services, rawMaterials } = useContext(ContractContext);
   const { account } = useContext(AuthContext);
 
-
-  // useEffect(() => {
-  //   //get medicine data from blockchain
-  //   async function getMedicineData() {
-  //     try{
-  //       const response = await Services.get_all_rawMaterials();
-  //       console.log(response);
-  //       setmeds(response.data);
-  //     }
-  //     catch(error){
-  //       console.log(error);
-  //     }
-  //   }
-  //   getMedicineData();
-  // }, []);
-
   const handleRowSelect = (name) => {
     if (selectedRows.includes(name)) {
       setSelectedRows(selectedRows.filter(row => row !== name));
@@ -48,7 +32,7 @@ const SendRequestToSupplier = ({ }) => {
     // const selectedData = meds.filter(item => selectedRows.includes(item.name));
 
     const selectedData = rawMaterials.filter(item => selectedRows.includes(item.name));
-    // console.log("Selected data iisssssssssssssssss:", JSON.stringify(selectedData));
+    console.log("Selected data is1: ", JSON.stringify(selectedData));
 
 
     const selectedMedicineDetails = selectedData.map(item => {
@@ -62,15 +46,18 @@ const SendRequestToSupplier = ({ }) => {
       };
     });
 
-    console.log("Selected data issssssssssss:", JSON.stringify(selectedMedicineDetails));
+    console.log("Selected data is2:", JSON.stringify(selectedMedicineDetails));
     const matids = selectedMedicineDetails.map(item => item.materialId);
     const quantities = selectedMedicineDetails.map(item => item.quantity);
 
+    console.log("matids: ", matids);
+    console.log("quantities: ", quantities);
 
-    const response = await Services.request_raw_material_package(matids, quantities, "desc hardcoded",
-      "transporterid",
-      "supplierid",
-      "inspectorid");
+
+    const response = await Services.request_raw_material_package(matids, quantities, "description",
+      "0xAB6bDA0a4e847Af362d54f88cC3663C219688c27",
+      "0x85B6B5d0838569C23c3418D1dB5989242C911208",
+      "0xE8Dc9F3cecc1E7DD7737001f1987cc2813246A93");
 
     if (response.status) {
       alert("req sent")
