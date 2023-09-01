@@ -59,7 +59,7 @@ function a11yProps(index) {
 }
 function ResponsiveDrawer(props) {
 
-  const { packages, Services, rawMaterials, batches, medicines, batchreports } = useContext(ContractContext);
+  const { packages, Services, rawMaterials, batches, medicines, batchreports,packagereports } = useContext(ContractContext);
   const { authenticate, deauthenticate, account, role } = React.useContext(AuthContext);
 
   const { window } = props;
@@ -96,7 +96,7 @@ function ResponsiveDrawer(props) {
     const receivedRequestsPackage = packages
       .filter((item) => item.inspectorId === account && item.stage === 2)
       .map((item) => {
-        const materialId = item.rawMaterials[0]?.materialId; // Get the materialId from the first object
+        const materialId = item.rawMaterials[0].materialId; // Get the materialId from the first object
         const rawMaterial = rawMaterials.find((rm) => rm.materialId === materialId); // Find the raw material with matching id
         const ipfsHash = rawMaterial ? rawMaterial.ipfs_hash : ""; // Get the ipfs_hash if rawMaterial exists
 
@@ -109,13 +109,17 @@ function ResponsiveDrawer(props) {
       .filter((item) => item.inspectorId === account && item.stage === 3)
       .map((item) => {
         const materialId = item.rawMaterials[0].materialId; // Get the materialId from the first object
-        const rawMaterial = rawMaterials.find((rm) => rm.id === materialId); // Find the raw material with matching id
+        const rawMaterial = rawMaterials.find((rm) => rm.materialId === materialId); // Find the raw material with matching id
         const ipfsHash = rawMaterial ? rawMaterial.ipfs_hash : ""; // Get the ipfs_hash if rawMaterial exists
+        const report = packagereports.find((rm) => rm.packageId === item.packageid); // Find the raw material with matching id
 
-        return { ...item, ipfs_hash: ipfsHash }; // Merge ipfs_hash into the package data
+        console.log("report"+report);
+
+
+        return { ...item, ipfs_hash: ipfsHash, grade: report.grade}; // Merge ipfs_hash into the package data
       });
 
-      console.log("aaaaaaaaaaaa"+sentRequestsPackage)
+      console.log("aaaaaaaaaaaa"+sentRequestsPackage);
 
     setSentPackageRequestData(sentRequestsPackage);
 

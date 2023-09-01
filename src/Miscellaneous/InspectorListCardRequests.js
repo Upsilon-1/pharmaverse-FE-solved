@@ -68,7 +68,7 @@ export default function InspectorListCardRequests({ data }) {
   console.log("data issssssssss"+ JSON.stringify(data.rawMaterials))
 
   const initialCardStates = data.rawMaterials.map(() => ({
-    concentration: "",
+    concentration: 0,
     remarks: "",
   }));
 
@@ -142,15 +142,17 @@ export default function InspectorListCardRequests({ data }) {
   const handleinspect = async (data)=>{
     // console.log("dataaaaaaaaaaaaaaaaaaa"+JSON.stringify(data))
     const chemicalquantity = data.rawMaterials.map((item) => item.quantity);
+    console.log("chemicalquantity"+JSON.stringify(chemicalquantity));
     // console.log("cardstatessssssssssssssssssssssssssssssss"+JSON.stringify(cardStates))
     // console.log("hhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-    const concentrationarray= cardStates.map((item) => item.concentration);
+    const concentrationarray= cardStates.map((item) => Number(item.concentration));
+    console.log("concentrationarray"+JSON.stringify(concentrationarray));
+    // console.log("ID; ",data.packageId)
 
-    const response = await Services.check_quality_of_package(data.packageID,remarks,chemicalquantity,concentrationarray);
+    const response = await Services.check_quality_of_package(data.packageId,remarks,chemicalquantity,concentrationarray);
 
-
-   
     if (response.success) {
+      console.log("success");
       handleCloseDialog();
     }
     else{

@@ -684,14 +684,8 @@ function ContractContextProvider(props) {
                     };
                 }
 
-                // const quantity = quantityArray.map((value) => ethers.BigNumber.from(value));
-                // const concentration = concentrationArray.map((value) => ethers.BigNumber.from(value));
-
-                const quantity = [1000];
-                const concentration = [1000];
-
                 const response = await InspectorContarct.methods
-                    .checkquality(packageId, description, quantity, concentration)
+                    .checkquality(packageId, description, quantityArray, concentrationArray)
                     .send({
                         from: account,
                     });

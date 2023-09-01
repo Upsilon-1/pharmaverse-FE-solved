@@ -126,7 +126,6 @@ export default function InspectorListCardSent({ data }) {
 </Typography>
 
       </CardContent>
-      {data["send-package"] && (
         <CardActions>
           <Grid item xs={12} sm={6}>
             <Button
@@ -145,7 +144,6 @@ export default function InspectorListCardSent({ data }) {
             </Button>
           </Grid>
         </CardActions>
-      )}
 
       {/* Dialog for Transporter Details */}
       <Dialog

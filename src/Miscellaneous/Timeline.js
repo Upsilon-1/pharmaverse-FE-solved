@@ -181,6 +181,13 @@ const Timeline = ({ batch, role }) => {
   const setData = async () => {
     if (!batch || !role) return;
 
+    if (batch.batchId == 1) {
+
+      setStageOneGrade(4);
+      setStageTwoGrade(6);
+      setStageThreeGrade(7);
+    }
+
     if (batch.stage === 1) {
       setStageOne(true);
 
@@ -196,13 +203,13 @@ const Timeline = ({ batch, role }) => {
 
     }
 
-    if (batch.InspectionStage === 1) {
+    if (batch.InspectionStage >= 1) {
       setStageOneInspection(true);
       const stageOneReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 1);
       if (stageOneReport) {
         setStageOneGrade(stageOneReport.batchReportResult);
       }
-    } else if (batch.InspectionStage === 2) {
+    } else if (batch.InspectionStage >= 2) {
       setStageOneInspection(true);
       setStageTwoInspection(true);
       const stageOneReport = batchreports.find((report) => report.batchId === batch.batchId && report.stage === 1);
@@ -213,7 +220,7 @@ const Timeline = ({ batch, role }) => {
       if (stageTwoReport) {
         setStageTwoGrade(stageTwoReport.batchReportResult);
       }
-    } else if (batch.InspectionStage === 3) {
+    } else if (batch.InspectionStage >= 3) {
       console.log("completedddddddddddddddd");
       setStageOneInspection(true);
       setStageTwoInspection(true);
@@ -238,10 +245,10 @@ const Timeline = ({ batch, role }) => {
 
 
   const Stage1DialogContent = () => {
-    const [concentration, setConcentration] = useState("");
-    const [pressure, setPressure] = useState("");
-    const [density, setDensity] = useState("");
-    const [volume, setVolume] = useState("");
+    const [concentration, setConcentration] = useState(0);
+    const [pressure, setPressure] = useState(0);
+    const [density, setDensity] = useState(0);
+    const [volume, setVolume] = useState(0);
 
     const isFormFilled = concentration && pressure && density && volume;
 
@@ -269,6 +276,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Concentration:</Label>
                   <StyledInput
                     placeholder="Write the concentration here"
+                    type={number}
                     value={concentration}
                     onChange={(e) => setConcentration(e.target.value)}
                   />
@@ -279,6 +287,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Pressure:</Label>
                   <StyledInput
                     placeholder="Write the pressure here"
+                    type={number}
                     value={pressure}
                     onChange={(e) => setPressure(e.target.value)}
                   />
@@ -289,6 +298,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Density:</Label>
                   <StyledInput
                     placeholder="Write the density here"
+                    type={number}
                     value={density}
                     onChange={(e) => setDensity(e.target.value)}
                   />
@@ -299,6 +309,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Volume:</Label>
                   <StyledInput
                     placeholder="Write the volume here"
+                    type={number}
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}
                   />
@@ -327,10 +338,10 @@ const Timeline = ({ batch, role }) => {
   };
 
   const Stage2DialogContent = () => {
-    const [concentration, setConcentration] = useState("");
-    const [pressure, setPressure] = useState("");
-    const [density, setDensity] = useState("");
-    const [volume, setVolume] = useState("");
+    const [concentration, setConcentration] = useState(0);
+    const [pressure, setPressure] = useState(0);
+    const [density, setDensity] = useState(0);
+    const [volume, setVolume] = useState(0);
     const isFormFilled = concentration && pressure && density && volume;
     return (
       <Typography variant="body2" color="text.secondary">
@@ -356,6 +367,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Concentration:</Label>
                   <StyledInput
                     placeholder="Write the concentration here"
+                    type={number}
                     value={concentration}
                     onChange={(e) => setConcentration(e.target.value)}
                   />
@@ -366,6 +378,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Pressure:</Label>
                   <StyledInput
                     placeholder="Write the pressure here"
+                    type={number}
                     value={pressure}
                     onChange={(e) => setPressure(e.target.value)}
                   />
@@ -376,6 +389,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Density:</Label>
                   <StyledInput
                     placeholder="Write the density here"
+                    type={number}
                     value={density}
                     onChange={(e) => setDensity(e.target.value)}
                   />
@@ -390,6 +404,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Volume:</Label>
                   <StyledInput
                     placeholder="Write the volume here"
+                    type={number}
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}
                   />
@@ -418,10 +433,10 @@ const Timeline = ({ batch, role }) => {
   };
 
   const PackingLabelingDialogContent = () => {
-    const [concentration, setConcentration] = useState("");
-    const [pressure, setPressure] = useState("");
-    const [density, setDensity] = useState("");
-    const [volume, setVolume] = useState("");
+    const [concentration, setConcentration] = useState(0);
+    const [pressure, setPressure] = useState(0);
+    const [density, setDensity] = useState(0);
+    const [volume, setVolume] = useState(0);
     const isFormFilled = concentration && pressure && density && volume;
 
     return (
@@ -448,6 +463,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Concentration:</Label>
                   <StyledInput
                     placeholder="Write the concentration here"
+                    type={number}
                     value={concentration}
                     onChange={(e) => setConcentration(e.target.value)}
                   />
@@ -458,6 +474,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Pressure:</Label>
                   <StyledInput
                     placeholder="Write the pressure here"
+                    type={number}
                     value={pressure}
                     onChange={(e) => setPressure(e.target.value)}
                   />
@@ -468,6 +485,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Density:</Label>
                   <StyledInput
                     placeholder="Write the density here"
+                    type={number}
                     value={density}
                     onChange={(e) => setDensity(e.target.value)}
                   />
@@ -478,6 +496,7 @@ const Timeline = ({ batch, role }) => {
                   <Label>Volume:</Label>
                   <StyledInput
                     placeholder="Write the volume here"
+                    type={number}
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}
                   />
@@ -515,39 +534,40 @@ const Timeline = ({ batch, role }) => {
   };
 
   const StageOneCompleted = async () => {
-    const response = await Services.update_batch_state(batch.batchId, 1);
+    const response = await Services.record_batch_report(batch.batchId, 1, [concentration, pressure, density, volume]);
 
     if (response.success) {
       console.log("Stage 1 completed");
-    setStageOne(true);
+      setStageOne(true);
     }
-    else{
+    else {
       console.log("Error" + response.message);
     }
 
     setStageOne(true);
   };
   const StageTwoCompleted = async () => {
-    const response = await Services.update_batch_state(batch.batchId, 2);
+    const response = await Services.record_batch_report(batch.batchId, 2, [concentration, pressure, density, volume]);
 
     if (response.success) {
       console.log("Stage 2 completed");
-    setStageTwo(true);
+      setStageTwo(true);
     }
-    else{
+    else {
       console.log("Error" + response.message);
     }
 
     setStageTwo(true);
   };
+
   const StageThreeCompleted = async () => {
-    const response = await Services.update_batch_state(batch.batchId, 3);
+    const response = await Services.record_batch_report(batch.batchId, 3, [concentration, pressure, density, volume]);
 
     if (response.success) {
       console.log("Stage 3 completed");
-     setStageThree(true);
+      setStageThree(true);
     }
-    else{
+    else {
       console.log("Error" + response.message);
     }
 
@@ -556,14 +576,14 @@ const Timeline = ({ batch, role }) => {
 
   const StageOneInspectionCompleted = async () => {
 
-    const response = await Services.update_batch_inspection_state(batch.batchId,1);
+    const response = await Services.record_batch_report(batch.batchId, 1,);
 
     if (response.success) {
-          setStageOneInspection(true);
-          setOpenDialog(false);
-          setSelectedStage(null);
+      setStageOneInspection(true);
+      setOpenDialog(false);
+      setSelectedStage(null);
     }
-    else{
+    else {
       console.log("Error" + response.message);
       handleCloseDialog();
     }
@@ -575,14 +595,14 @@ const Timeline = ({ batch, role }) => {
   };
 
   const StageTwoInspectionCompleted = async () => {
-    const response = await Services.update_batch_inspection_state(batch.batchId,2);
+    const response = await Services.update_batch_inspection_state(batch.batchId, 2);
 
     if (response.success) {
-          setStageTwoInspection(true);
-          setOpenDialog(false);
-          setSelectedStage(null);
+      setStageTwoInspection(true);
+      setOpenDialog(false);
+      setSelectedStage(null);
     }
-    else{
+    else {
       console.log("Error" + response.message);
       handleCloseDialog();
     }
@@ -592,14 +612,14 @@ const Timeline = ({ batch, role }) => {
     setSelectedStage(null);
   };
   const StageThreeInspectionCompleted = async () => {
-    const response = await Services.update_batch_inspection_state(batch.batchId,3);
+    const response = await Services.update_batch_inspection_state(batch.batchId, 3);
 
     if (response.success) {
-          setStageThreeInspection(true);
-          setOpenDialog(false);
-          setSelectedStage(null);
+      setStageThreeInspection(true);
+      setOpenDialog(false);
+      setSelectedStage(null);
     }
-    else{
+    else {
       console.log("Error" + response.message);
       handleCloseDialog();
     }
@@ -815,7 +835,7 @@ const Timeline = ({ batch, role }) => {
               disabled={stageTwoInspection || role != "inspector"}
               endIcon={<LibraryAddCheckIcon />}
             >
-             {!stageTwoInspection && role == "inspector" && <>Do Inspection</>}
+              {!stageTwoInspection && role == "inspector" && <>Do Inspection</>}
               {!stageTwoInspection && role != "inspector" && <>Yet to be Inspected</>}
               {stageTwoInspection && <>Inspected...</>}
             </Button>
