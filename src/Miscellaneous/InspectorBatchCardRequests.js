@@ -198,7 +198,7 @@ export default function InspectorBatchCardRequests({ data }) {
 
   return (
     <Fade bottom>
-      <>
+      <div className="card-container">
         {data && data.map((batch, index) => (
           <div key={index}>
             {
@@ -356,7 +356,7 @@ export default function InspectorBatchCardRequests({ data }) {
             }
           </div>
         ))}
-      </>
+      </div>
     </Fade>
   );
 }
