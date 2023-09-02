@@ -2,62 +2,32 @@
     {
       "id": "S123",
       "name": "Supplier A",
-      "address": "123 Supplier Lane, City",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
       "image": "/path/to/supplierA.jpg"
     },
     {
       "id": "S124",
       "name": "Supplier B",
-      "address": "456 Supplier Road, Town",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
       "image": "/path/to/supplierB.jpg"
     },
     {
       "id": "S125",
       "name": "Supplier C",
-      "address": "789 Supplier Street, Village",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
       "image": "/path/to/supplierC.jpg"
     },
     {
       "id": "S126",
       "name": "Supplier D",
-      "address": "101 Supplier Avenue, Hamlet",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
       "image": "/path/to/supplierD.jpg"
     },
     {
       "id": "S127",
       "name": "Supplier E",
-      "address": "111 Supplier Place, Suburb",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
       "image": "/path/to/supplierE.jpg"
-    },
-    {
-      "id": "S128",
-      "name": "Supplier F",
-      "address": "222 Supplier Boulevard, District",
-      "image": "/path/to/supplierF.jpg"
-    },
-    {
-      "id": "S129",
-      "name": "Supplier G",
-      "address": "333 Supplier Square, Town",
-      "image": "/path/to/supplierG.jpg"
-    },
-    {
-      "id": "S130",
-      "name": "Supplier H",
-      "address": "444 Supplier Circle, Village",
-      "image": "/path/to/supplierH.jpg"
-    },
-    {
-      "id": "S131",
-      "name": "Supplier I",
-      "address": "555 Supplier Road, Hamlet",
-      "image": "/path/to/supplierI.jpg"
-    },
-    {
-      "id": "S132",
-      "name": "Supplier J",
-      "address": "666 Supplier Lane, Suburb",
-      "image": "/path/to/supplierJ.jpg"
     }
   ]
   

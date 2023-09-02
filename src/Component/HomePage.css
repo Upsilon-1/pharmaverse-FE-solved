@@ -7,6 +7,9 @@ body {
   margin: 0 auto;
   padding: 0px 20px;
 }
+.container{
+  font-style: italic;
+}
 
 .hero {
   width: 100%;
@@ -31,12 +34,6 @@ body {
   justify-content: center;
   cursor: pointer;
 }
-
-.nav-list {
-  display: flex;
-  flex-direction: row;
-}
-
 
 nav .hamb {
   width: 35px;
@@ -115,7 +112,9 @@ nav .nav-list li a:hover {
   line-height: 1.2;
   margin: 20px 0px 20px;
 }
-
+.h1 span{
+  color:#27ae60;
+}
 .container .hero-text h3 {
   color: #eee;
   font-weight: 900;
@@ -425,4 +424,10 @@ nav .nav-list li a:hover {
 .contact-button:hover {
   background-color: #27ae60;
   transform: scale(1.05);
+}
+
+/* Add this CSS to your existing stylesheet */
+.nav-list {
+  display: flex;
+  flex-direction: row;
 }

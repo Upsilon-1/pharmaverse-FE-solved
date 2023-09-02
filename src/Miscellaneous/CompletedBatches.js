@@ -270,7 +270,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
                 <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
               </div>
               <div className="details" >
-                <p>Grade: {batch.grade}</p>
+                <p>Grade: 4</p>
               </div>
             </div>
           ))

@@ -157,11 +157,8 @@ const HomePage = () => {
                   <div className="h1">
                     This is <span>PharmaVerse</span>
                   </div>
-                  <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit
-                    odit unde placeat, enim tenetur aspernatur necessitatibus rem
-                    earum facilis perferendis! Perferendis voluptates reiciendis
-                    doloribus rem a, ipsa tempore dolorum magnam.
+                  <p style={{fontWeight:700}}>
+                  Pioneering the Future of Healthcare and Pharmaceutical Management through Blockchain Innovation, Enhancing Transparency, Efficiency, and Trust in the Medical Ecosystem.
                   </p>
                   <div className="social">
                     <a href="#">
