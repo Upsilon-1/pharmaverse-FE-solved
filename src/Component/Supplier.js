@@ -12,6 +12,8 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Link } from "react-router-dom";
+import { Button, Hidden } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -80,10 +82,10 @@ function ResponsiveDrawer(props) {
       console.log(accounts.address);
 
       const res = await Services.get_role(accounts.address);
-      if(res.success){
-        authenticate(accounts.address,res.data);
+      if (res.success) {
+        authenticate(accounts.address, res.data);
       }
-      else{
+      else {
         authenticate(accounts.address, '');
       }
     },
@@ -94,14 +96,14 @@ function ResponsiveDrawer(props) {
 
   useEffect(() => {
     setData();
-  }, [packages,account]);
+  }, [packages, account]);
 
   const setData = async () => {
     if (!packages || !account) return;
 
-    console.log("account: ",account);
+    console.log("account: ", account);
 
-    console.log("packages: ",packages);
+    console.log("packages: ", packages);
 
     const receivedRequests = packages
       .filter((item) => item.supplierId === account && item.stage === 0)
@@ -113,7 +115,7 @@ function ResponsiveDrawer(props) {
         return { ...item, ipfs_hash: ipfsHash }; // Merge ipfs_hash into the package data
       });
 
-      console.log("receivedRequests: ", receivedRequests);
+    console.log("receivedRequests: ", receivedRequests);
 
     setReceivedRequestData(receivedRequests);
 
@@ -128,7 +130,7 @@ function ResponsiveDrawer(props) {
         return { ...item, ipfs_hash: ipfsHash }; // Merge ipfs_hash into the package data
       });
 
-      console.log("sentRequests: ", sentRequests);
+    console.log("sentRequests: ", sentRequests);
 
     setSentRequestData(sentRequests);
   };
@@ -203,19 +205,28 @@ function ResponsiveDrawer(props) {
         <Toolbar
           sx={{
             display: "flex",
-            justifyContent: { xs: "space-between", sm: "flex-end" },
+            justifyContent: "space-between",
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <ConnectButton />
+          <Hidden smUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Link to="/" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Home</Button></Link>
+            <Link to="/contact" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Contact Us</Button></Link>
+            <Link to="/inventory" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Inventory</Button></Link>
+          </div>
+          <div>
+            <ConnectButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Box
@@ -273,8 +284,8 @@ function ResponsiveDrawer(props) {
                   <SupplierListCardRequests key={index} data={data} />
                 ))} */}
               {ReceivedRequestData.map((data, index) => (
-                  <SupplierListCardRequests key={index} data={data} />
-                ))}
+                <SupplierListCardRequests key={index} data={data} />
+              ))}
             </div>
           </TabPanel>
 
@@ -286,8 +297,8 @@ function ResponsiveDrawer(props) {
                   <SupplierListCardSent key={index} data={data} />
                 ))} */}
               {SentRequestData.map((data, index) => (
-                  <SupplierListCardSent key={index} data={data} />
-                ))}
+                <SupplierListCardSent key={index} data={data} />
+              ))}
             </div>
           </TabPanel>
         </Typography>

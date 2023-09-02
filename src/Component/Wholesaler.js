@@ -7,6 +7,9 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Link } from "react-router-dom";
+import { Button, Hidden } from "@mui/material";
+
 import { AuthContext } from "../Context/AuthContext";
 import { ContractContext } from "../Context/ContractContext";
 import { useAccount } from "wagmi";
@@ -147,22 +150,31 @@ function ResponsiveDrawer(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar
+       <Toolbar
           sx={{
             display: "flex",
-            justifyContent: { xs: "space-between", sm: "flex-end" },
+            justifyContent: "space-between",
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <ConnectButton />
+          <Hidden smUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <div style={{ display: "flex", alignItems: "center", gap:"0.5rem"  }}>
+            <Link to="/" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Home</Button></Link>
+            <Link to="/contact" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Contact Us</Button></Link>
+
+          </div>
+          <div>
+            <ConnectButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Box

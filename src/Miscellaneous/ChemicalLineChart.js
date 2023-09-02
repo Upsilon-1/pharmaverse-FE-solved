@@ -44,9 +44,9 @@ const ChemicalListChart = () => {
   //   y: quantity[index],
   // }));
 
-  return (<>
-    <Loader isLoading={isLoading} />
-    {!isLoading && (
+  return (
+    <div style={{ height: "100%", backgroundColor: "black", boxShadow: "10px solid black" }}>
+
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
@@ -60,9 +60,7 @@ const ChemicalListChart = () => {
         </ResponsiveContainer>
 
       </div>
-    )}
-
-  </>
+    </div>
   );
 };
 

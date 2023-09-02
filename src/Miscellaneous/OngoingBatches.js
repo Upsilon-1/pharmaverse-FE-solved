@@ -105,6 +105,8 @@ const OngoingBatches = () => {
 
     setOpenDialog(false);
   };
+  const sortedBatches = [...OngoingBatches].sort((a, b) => a.stage - b.stage);
+
   return (
     <div>
       <div class="searchBox">
@@ -189,7 +191,7 @@ const OngoingBatches = () => {
 
       <div className="allcards">
         {searchValue === ""
-          ? OngoingBatches.map((batch, index) => (
+          ? sortedBatches.map((batch, index) => (
             <div
               className="card"
               key={index}
@@ -204,7 +206,7 @@ const OngoingBatches = () => {
               </div>
             </div>
           ))
-          : OngoingBatches.filter((item) => item.currentstage === parseInt(searchValue)).map((batch, index) => (  //    
+          : sortedBatches.filter((item) => item.currentstage === parseInt(searchValue)).map((batch, index) => (  //    
             <div
               className="card"
               key={index}

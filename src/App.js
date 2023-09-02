@@ -1,4 +1,4 @@
-import react,{ useContext, useEffect } from "react";
+import react, { useContext, useEffect } from "react";
 import "./App.css";
 import Admin_Page from "./Component/Admin-Page";
 import Supplier from "./Component/Supplier";
@@ -16,6 +16,7 @@ import ContractContextProvider from './Context/ContractContext';
 import NotFound from "./Component/NotFound";
 import HomePage from "./Component/HomePage";
 import { AuthContext } from "./Context/AuthContext";
+import ContactUs from "./Component/ContactUs"
 
 
 
@@ -29,22 +30,22 @@ const darkTheme = createTheme({
 
 
 function App() {
-  const {role} = useContext(AuthContext)
-  
-  useEffect(()=>{
-    if(role == ""&& window.location.pathname!="/"){
-      window.location.href="/"
+  const { role } = useContext(AuthContext)
+
+  useEffect(() => {
+    if (role == "" && window.location.pathname != "/") {
+      window.location.href = "/"
     }
-    
-    console.log("roleeeeeeee"+role)
-  },[role])
-  
+
+    console.log("roleeeeeeee" + role)
+  }, [role])
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div className="App">
         <Routes>
-          
+
           <Route exact path="/admin" element={<Admin_Page />} />
           <Route
             exact
@@ -82,6 +83,8 @@ function App() {
               </>
             }
           />
+          <Route exact path="/contact" element={<ContactUs />} />
+
           <Route exact path="/manufacturer" element={<Manufacturer />} />
           <Route exact path="/wholesaler" element={<WholeSaler />} />
 

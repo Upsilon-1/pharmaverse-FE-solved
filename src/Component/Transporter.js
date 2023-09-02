@@ -12,6 +12,9 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import IconButton from "@mui/material/IconButton";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
+import { Link } from "react-router-dom";
+import { Button, Grid, Hidden, Tab, Tabs } from "@mui/material";
+
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -21,7 +24,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Inventory from "../Component/Inventory";
-import { Grid, Tab, Tabs } from "@mui/material";
 import ChemicalListChart from "../Miscellaneous/ChemicalLineChart";
 import ChemicalList from "../Miscellaneous/ChemicalList";
 import TopChemicals from "../Miscellaneous/TopChemicals";
@@ -88,10 +90,10 @@ function ResponsiveDrawer(props) {
     onConnect: async (accounts) => {
 
       const res = await Services.get_role(accounts.address);
-      if(res.success){
-        authenticate(accounts.address,res.data);
+      if (res.success) {
+        authenticate(accounts.address, res.data);
       }
-      else{
+      else {
         authenticate(accounts.address, '');
       }
     },
@@ -103,13 +105,13 @@ function ResponsiveDrawer(props) {
 
   useEffect(() => {
     setData();
-  }, [packages,account,batches]);
+  }, [packages, account, batches]);
 
   const setData = async () => {
     if (!packages || !account || !batches) return;
     console.log("called");
 
-    console.log("batches: ",batches);
+    console.log("batches: ", batches);
 
     const receivedRequestsPackage = packages
       .filter((item) => item.transporterId === account && item.stage === 1)
@@ -124,7 +126,7 @@ function ResponsiveDrawer(props) {
     setReceivedPackageRequestData(receivedRequestsPackage);
 
     const sentRequestsPackage = packages
-      .filter((item) => item.transporterId === account && item.stage === 2)
+      .filter((item) => item.transporterId === account && item.stage >= 2)
       .map((item) => {
         const materialId = item.rawMaterials[0].materialId; // Get the materialId from the first object
         const rawMaterial = rawMaterials.find((rm) => rm.materialId === materialId); // Find the raw material with matching id
@@ -133,10 +135,10 @@ function ResponsiveDrawer(props) {
         return { ...item, ipfs_hash: ipfsHash }; // Merge ipfs_hash into the package data
       });
 
-      setSentPackageRequestData(sentRequestsPackage);
+    setSentPackageRequestData(sentRequestsPackage);
 
     const sentRequestsBatch = batches
-      .filter((item) => item.transporterId === account && item.stage === 4 && item.InspectionStage === 4 ) //  
+      .filter((item) => item.transporterId === account && item.stage === 4 && item.InspectionStage === 4) //  
       .map((item) => {
         const medicineId = item.medicines[0].materialId; // Get the materialId from the first object
         const medicine = medicines.find((rm) => rm.medicineId === medicineId); // Find the medicine with matching id
@@ -146,10 +148,10 @@ function ResponsiveDrawer(props) {
       });
 
     setReceivedBatchRequestData(sentRequestsBatch);
-    console.log("sentRequestsBatch: ",sentRequestsBatch);
+    console.log("sentRequestsBatch: ", sentRequestsBatch);
 
     const receivedRequestsBatch = batches
-      .filter((item) => item.transporterId === account ) //  && item.stage === 5 && item.InspectionStage === 4
+      .filter((item) => item.transporterId === account) //  && item.stage === 5 && item.InspectionStage === 4
       .map((item) => {
         const medicineId = item.medicines[0].materialId; // Get the materialId from the first object
         const medicine = medicines.find((rm) => rm.medicineId === medicineId); // Find the medicine with matching id
@@ -159,7 +161,7 @@ function ResponsiveDrawer(props) {
       });
 
     setSentBatchRequestData(receivedRequestsBatch);
-    console.log("receivedRequestsBatch: ",receivedRequestsBatch);
+    console.log("receivedRequestsBatch: ", receivedRequestsBatch);
   };
 
   const handleChange = (event, newValue) => {
@@ -255,19 +257,28 @@ function ResponsiveDrawer(props) {
         <Toolbar
           sx={{
             display: "flex",
-            justifyContent: { xs: "space-between", sm: "flex-end" },
+            justifyContent: "space-between",
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <ConnectButton />
+          <Hidden smUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <div style={{ display: "flex", alignItems: "center", gap:"0.5rem" }}>
+            <Link to="/" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Home</Button></Link>
+            <Link to="/contact" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Contact Us</Button></Link>
+
+          </div>
+          <div>
+            <ConnectButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Box
@@ -320,16 +331,16 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           <TabPanel value={value} index={0}>
             <div className="card-container">
-               {ReceivedPackageRequestData.map((data, index) => (
-                  <TransporterListCardRequests key={index} data={data} />
-                ))}
+              {ReceivedPackageRequestData.map((data, index) => (
+                <TransporterListCardRequests key={index} data={data} />
+              ))}
             </div>
           </TabPanel>
           <TabPanel value={value} index={1}>
             <div className="card-container">
               {SentPackageRequestData.map((data, index) => (
-                  <TransporterListCardSent key={index} data={data} />
-                ))}
+                <TransporterListCardSent key={index} data={data} />
+              ))}
             </div>
           </TabPanel>
           <TabPanel value={value} index={2}>

@@ -32,6 +32,12 @@ body {
   cursor: pointer;
 }
 
+.nav-list {
+  display: flex;
+  flex-direction: row;
+}
+
+
 nav .hamb {
   width: 35px;
   height: 24px;

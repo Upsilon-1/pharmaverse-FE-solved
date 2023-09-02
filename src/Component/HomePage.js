@@ -8,6 +8,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { Drawer, Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Link } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
@@ -121,202 +122,187 @@ const HomePage = () => {
 
   return (
     <>
-    <Loader isLoading={isLoading} />
-    {!isLoading && (
-      <div style={{ margin: "0" }}>
+      <Loader isLoading={isLoading} />
+      {!isLoading && (
+        <div style={{ margin: "0" }}>
 
-      <section class="hero">
-        <div class="main-width">
-          <header className="homepage-header">
-            <div class="logo">
+          <section class="hero">
+            <div class="main-width">
+              <header className="homepage-header">
+                <div class="logo">
+                  <img src={logo} alt="" width={"200rem"} height={"50rem"} />
+                </div>
+                <nav>
+                  {isMobile && (
+                    <div style={{ cursor: "pointer" }} onClick={toggleMobileMenu}>
+                      <MenuIcon color="success" />
+                    </div>
+                  )}
+                  {!isMobile && (
+                    <ul
+                      style={{ marginLeft: "100px" }}
+                      className={`nav-list ${isMobileMenuOpen ? "hide" : ""}`}
+                    >
+                      <li class="btn1" style={{marginTop:"-10px", marginLeft:"110px"}}>
+                        <ConnectButton />
+                      </li>
+                    </ul>
+                  )}
+                </nav>
+              </header>
+
+              <div className="container">
+                <div className="hero-text">
+                  <h3>Hi, There !</h3>
+                  <div className="h1">
+                    This is <span>PharmaVerse</span>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit
+                    odit unde placeat, enim tenetur aspernatur necessitatibus rem
+                    earum facilis perferendis! Perferendis voluptates reiciendis
+                    doloribus rem a, ipsa tempore dolorum magnam.
+                  </p>
+                  <div className="social">
+                    <a href="#">
+                      <FacebookIcon
+                        color="primary"
+                        sx={{ fontSize: 30, color: "whitesmoke" }}
+                      />
+                    </a>
+                    <a href="#">
+                      <LinkedInIcon
+                        color="primary"
+                        sx={{ fontSize: 30, color: "whitesmoke" }}
+                      />
+                    </a>
+                    <a href="#">
+                      <InstagramIcon
+                        color="primary"
+                        sx={{ fontSize: 30, color: "whitesmoke" }}
+                      />
+                    </a>
+                    <a href="#">
+                      <TwitterIcon
+                        color="primary"
+                        sx={{ fontSize: 30, color: "whitesmoke" }}
+                      />
+                    </a>
+                  </div>
+                  <Stack
+                    sx={{ justifyContent: "center", alignItems: "center" }}
+                    direction={"row"}
+                  >
+                    {role == "" ? <>{navigate("/")}</> : <button
+                      className="btn0"
+                      type="button"
+                      style={{ width: "12rem" }}
+                      onClick={() => {
+                        switch (role) {
+                          case "Supplier":
+                            navigate("/supplier")
+                            break;
+                          case "Transporter":
+                            navigate("/transporter");
+                            break;
+                          case "Inspector":
+                            navigate("/inspector");
+                            break;
+                          case "Admin":
+                            navigate("/admin");
+                            break;
+                          case "Manufacturer":
+                            navigate("/manufacturer");
+                            break;
+                            case "Wholesaler":
+                            navigate("/wholesaler")
+                            break;
+                          default:
+                            navigate("/");
+                            break;
+                        }
+                      }}
+                    >
+                      Go To Dashboard
+                    </button>}
+                  </Stack>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+
+          <Drawer
+            anchor="left"
+            open={isMobileMenuOpen}
+            onClose={isMobile ? toggleMobileMenu : closeDrawer}
+          >
+            <div class="logo" style={{ marginLeft: "18px", marginTop: "10px" }}>
               <img src={logo} alt="" width={"200rem"} height={"50rem"} />
             </div>
-            <nav>
-              {isMobile && (
-                <div style={{ cursor: "pointer" }} onClick={toggleMobileMenu}>
-                  <MenuIcon color="success" />
-                </div>
-              )}
-              {!isMobile && (
-                <ul
-                  style={{ marginLeft: "100px" }}
-                  className={`nav-list ${isMobileMenuOpen ? "hide" : ""}`}
-                >
+            <Divider sx={{ width: "100%" }} />
+            <div
+              style={{
+                width: "250px",
+                padding: "20px",
+              }}
+            >
+              <List>
+                <ListItem sx={{ textAlign: "center", justifyContent: "center" }}>
+                  {/* <ListItemText primary="Home" sx={{textAlign:"center" }}/> */}
                   <li>
-                    <a href="#" style={{ textDecoration: "none" }}>
+                    <a href="#" style={{ textDecoration: "none", color: "white" }}>
                       Home
                     </a>
                   </li>
-
+                </ListItem>
+                <ListItem sx={{ textAlign: "center", justifyContent: "center" }}>
+                  {/* <ListItemText primary="About" sx={{ textAlign: "center" }} /> */}
                   <li>
-                    <a href="#" style={{ textDecoration: "none" }}>
+                    <a href="#" style={{ textDecoration: "none", color: "white" }}>
                       About
                     </a>
                   </li>
+                </ListItem>
 
+                <ListItem
+                  sx={{
+                    textAlign: "center",
+                    justifyContent: "center",
+                    marginBottom: "24px",
+                  }}
+                >
                   <li class="btn">
-                    <a href="#" style={{ textDecoration: "none" }}>
+                    <a
+                      href="#"
+                      style={{
+                        textDecoration: "none",
+                        color: "white",
+
+                      }}
+                    >
                       Contact Us
                     </a>
                   </li>
-                  <li class="btn1">
-                    <ConnectButton />
-                  </li>
-                </ul>
-              )}
-            </nav>
-          </header>
+                </ListItem>
 
-          <div className="container">
-            <div className="hero-text">
-              <h3>Hi, There !</h3>
-              <div className="h1">
-                This is <span>PharmaVerse</span>
-              </div>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit
-                odit unde placeat, enim tenetur aspernatur necessitatibus rem
-                earum facilis perferendis! Perferendis voluptates reiciendis
-                doloribus rem a, ipsa tempore dolorum magnam.
-              </p>
-              <div className="social">
-                <a href="#">
-                  <FacebookIcon
-                    color="primary"
-                    sx={{ fontSize: 30, color: "whitesmoke" }}
-                  />
-                </a>
-                <a href="#">
-                  <LinkedInIcon
-                    color="primary"
-                    sx={{ fontSize: 30, color: "whitesmoke" }}
-                  />
-                </a>
-                <a href="#">
-                  <InstagramIcon
-                    color="primary"
-                    sx={{ fontSize: 30, color: "whitesmoke" }}
-                  />
-                </a>
-                <a href="#">
-                  <TwitterIcon
-                    color="primary"
-                    sx={{ fontSize: 30, color: "whitesmoke" }}
-                  />
-                </a>
-              </div>
-              <Stack
-                sx={{ justifyContent: "center", alignItems: "center" }}
-                direction={"row"}
-              >
-                {role == "" ? <>{navigate("/")}</> : <button
-                  className="btn0"
-                  type="button"
-                  style={{ width: "12rem" }}
-                  onClick={() => {
-                    switch (role) {
-                      case "Supplier":
-                        // navigate("/supplier")
-                        navigate("/supplier")
-                        break;
-                      case "Transporter":
-                        navigate("/transporter");
-                        break;
-                      case "Inspector":
-                        navigate("/inspector");
-                        break;
-                      case "Admin":
-                        navigate("/admin");
-                        break;
-                      case "Manufacturer":
-                        navigate("/manufacturer");
-                        break;
-                      default:
-                        navigate("/");
-                        break;
-                    }
-                  }}
-                >
-                  Go To Dashboard
-                </button>}
-              </Stack>
+                <ListItem sx={{ textAlign: "center", justifyContent: "center" }}>
+                  <div class="btn1">
+                    <ConnectButton />
+                  </div>
+                </ListItem>
+              </List>
             </div>
+            <Divider sx={{ width: "100%" }} />
+          </Drawer>
+          <div className="bottom" style={{ padding: "0" }}>
+            <p>© 2023 Upsilon - All Rights Reserved</p>{" "}
           </div>
         </div>
-      </section>
+      )}
 
-
-
-      <Drawer
-        anchor="left"
-        open={isMobileMenuOpen}
-        onClose={isMobile ? toggleMobileMenu : closeDrawer}
-      >
-        <div class="logo" style={{ marginLeft: "18px", marginTop: "10px" }}>
-          <img src={logo} alt="" width={"200rem"} height={"50rem"} />
-        </div>
-        <Divider sx={{ width: "100%" }} />
-        <div
-          style={{
-            width: "250px",
-            padding: "20px",
-          }}
-        >
-          <List>
-            <ListItem sx={{ textAlign: "center", justifyContent: "center" }}>
-              {/* <ListItemText primary="Home" sx={{textAlign:"center" }}/> */}
-              <li>
-                <a href="#" style={{ textDecoration: "none", color: "white" }}>
-                  Home
-                </a>
-              </li>
-            </ListItem>
-            <ListItem sx={{ textAlign: "center", justifyContent: "center" }}>
-              {/* <ListItemText primary="About" sx={{ textAlign: "center" }} /> */}
-              <li>
-                <a href="#" style={{ textDecoration: "none", color: "white" }}>
-                  About
-                </a>
-              </li>
-            </ListItem>
-
-            <ListItem
-              sx={{
-                textAlign: "center",
-                justifyContent: "center",
-                marginBottom: "24px",
-              }}
-            >
-              <li class="btn">
-                <a
-                  href="#"
-                  style={{
-                    textDecoration: "none",
-                    color: "white",
-
-                  }}
-                >
-                  Contact Us
-                </a>
-              </li>
-            </ListItem>
-
-            <ListItem sx={{ textAlign: "center", justifyContent: "center" }}>
-              <div class="btn1">
-                <ConnectButton />
-              </div>
-            </ListItem>
-          </List>
-        </div>
-        <Divider sx={{ width: "100%" }} />
-      </Drawer>
-      <div className="bottom" style={{ padding: "0" }}>
-        <p>© 2023 Upsilon - All Rights Reserved</p>{" "}
-      </div>
-    </div>
-    )}
- 
- </>
+    </>
   );
 };
 export default HomePage;

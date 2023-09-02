@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import './AddMaterial.css'
-import { Button } from '@mui/material';
+import { Button,Typography,Stack } from '@mui/material';
 import { ContractContext } from "../Context/ContractContext";
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { UploadToIPFS } from "../Utils/UploadToIpfs";
 import { useAlert } from "react-alert";
 import Loader from './Loader/Loader';
+
 
 
 const AddMaterial = () => {
@@ -91,15 +92,25 @@ const AddMaterial = () => {
       console.log(error);
     }
   }
+
   return (
     <>
       <Loader isLoading={isLoading} />
       {!isLoading && (<div>
         <form class="form">
-          <span class="title">Add More Items To Inventory</span>
-          <input type="text" class="input" placeholder="Material Name" onChange={(e) => setMatname(e.target.value)} />
-          <input type="text" class="input" placeholder="Material Description" onChange={(e) => setMatdesc(e.target.value)} />
-          <input type="number" min={"0"} class="input" placeholder="Material Quantity" style={{ width: "90%" }} onChange={(e) => setMatquantity(e.target.value)} />
+          <span class="title">ADD MORE ITEMS TO INVENTORY</span>
+          <Stack direction="column" width="100%" sx={{ marginTop: "16px", marginLeft: "30px" }}>
+            <Typography sx={{ textAlign: "left", justifyContent: "flex-start", fontWeight: 700 }}>Material Name* :</Typography>
+            <input type="text" class="input" placeholder="Material Name" onChange={(e) => setMatname(e.target.value)} />
+          </Stack>
+          <Stack direction="column" width="100%" sx={{ marginTop: "16px", marginLeft: "30px" }}>
+            <Typography sx={{ textAlign: "left", justifyContent: "flex-start", fontWeight: 700 }}>Material Description* :</Typography>
+            <input type="text" class="input" placeholder="Material Description" onChange={(e) => setMatdesc(e.target.value)} />
+          </Stack>
+          <Stack direction="column" width="100%" sx={{ marginTop: "16px", marginLeft: "30px" }}>
+            <Typography sx={{ textAlign: "left", justifyContent: "flex-start", fontWeight: 700 }}>Material Quantity* :</Typography>
+            <input type="number" min={"0"} class="input" placeholder="Material Quantity" style={{ width: "90.2%", height: "48px", borderRadius: "10px", paddingLeft: "10px" }} onChange={(e) => setMatquantity(e.target.value)} />
+          </Stack>
           <div className='addsubmit'>
             <input id="file" type="file"
               onChange={handleFileChange}

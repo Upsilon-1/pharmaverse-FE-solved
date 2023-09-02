@@ -6,6 +6,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CONSTANTS from "../Utils/Constants";
+import CloseIcon from "@mui/icons-material/Close";
 
 import {
   AppBar,
@@ -224,21 +225,24 @@ const TopChemicals = () => {
     {rawMaterials.map((it)=>it.name==chemical.x?setCardimage(`${CONSTANTS.IPFSURL}/${it.ipfs_hash}`):"")}
     setDialogOpen(true);
   };
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  }
   // Taking the top 3 values
   const topXAxisData = xAxisData.slice(0, 3);
   console.log("topaxis is :"+ JSON.stringify(topXAxisData))
   
   return (
     <>
-      <div style={{ marginTop: "20px", display: "flex", gap: "2rem", display:"flex",justifyContent:"center" }}>
+      <div style={{ marginTop: "20px", display: "flex", gap: "0.3rem", display:"flex",justifyContent:"center" }}>
         {topXAxisData.map((item) => (
-          <div key={item.x}  onClick={() => handleCardClick(item)} style={{margin:"50px"}}>
+          <div key={item.x}  onClick={() => handleCardClick(item)} style={{margin:"10px"}}>
             <div
               className="card"
-              style={{ cursor: "pointer", height: "300px", width:"300px" }}
+              style={{ cursor: "pointer", height: "300px", width:"400px" }}
             >
               {console.log(`Image is : ${CONSTANTS.IPFSURL}/${rawMaterials[0].ipfs_hash}`)}
-              {rawMaterials.map((it)=>it.name==item.x?<img src={`${CONSTANTS.IPFSURL}/${it.ipfs_hash}`} style={{height:"200px",width:"200px"}}/>:"")}
+              {rawMaterials.map((it)=>it.name==item.x?<img src={`${CONSTANTS.IPFSURL}/${it.ipfs_hash}`} style={{height:"300px",width:"400px"}}/>:"")}
               <div className="card__content">
                 <p className="card__title">
                   {item.x}:{item.quantity}
@@ -260,9 +264,14 @@ const TopChemicals = () => {
           sx={{ backdropFilter: "blur(20px)" }}
         >
           <AppBar sx={{ position: "relative" }}>
-            <Toolbar>
-              <IconButton edge="start" color="inherit" aria-label="close">
-                {/* <CloseIcon /> */}
+          <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleCloseDialog}
+                aria-label="close"
+              >
+                <CloseIcon />
               </IconButton>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 Chemical Details

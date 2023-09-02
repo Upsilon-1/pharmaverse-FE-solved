@@ -45,6 +45,10 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('md');
 
+  const filteredBatches = CompletebatchData.filter(
+    (item) => item.grade === parseInt(searchValue)
+  );
+
   useEffect(() => {
     setData();
   }, []);
@@ -56,7 +60,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
 
     if (isAdmin) {
       updatedBatches = batches
-        .filter((item) => item.stage === 5 && item.InspectionStage === 3)
+        .filter((item) => item.InspectionStage === 3)
         .map((item) => {
           const updatedMedicines = item.medicines.map((medicine) => {
             const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);
@@ -84,7 +88,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
     }
     else if (isWholesaler) {
       updatedBatches = batches
-        .filter((item) => item.wholesalerId === account && item.stage === 5 && item.InspectionStage === 3)
+        .filter((item) => item.wholesalerId === account && item.InspectionStage === 3)
         .map((item) => {
           const updatedMedicines = item.medicines.map((medicine) => {
             const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);
@@ -166,6 +170,9 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
   const handleFullWidthChange = (event) => {
     setFullWidth(event.target.checked);
   };
+
+  const sortedBatches = [...CompletedBatches].sort((a, b) => a.grade - b.grade);
+
 
   return (
     <div>
@@ -252,7 +259,7 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
 
       <div className="allcards">
         {searchValue === ""
-          ? CompletedBatches.map((batch, index) => (
+          ? sortedBatches.map((batch, index) => (
             <div
               className="card"
               key={index}
@@ -262,14 +269,15 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
               <div className="remove-when-use">
                 <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
               </div>
-              <div className="details">
+              <div className="details" >
                 <p>Grade: {batch.grade}</p>
               </div>
             </div>
           ))
-          : CompletedBatches
-            .filter((item) => item.grade === parseInt(searchValue))
-            .map((batch, index) => (
+          : filteredBatches.length === 0 ? (
+            <div className="nothing-found-message">Nothing Found</div>
+          ) : (
+            sortedBatches.filter((item) => item.grade === parseInt(searchValue)).map((batch, index) => (
               <div
                 className="card"
                 key={index}
@@ -280,9 +288,9 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
                   <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
                 </div>
                 <div className="details">
-                <p>Grade: {batch.grade}</p>
+                  <p>Grade: {batch.grade}</p>
                 </div>
-              </div>
+              </div>)
             ))}
       </div>
       <Dialog

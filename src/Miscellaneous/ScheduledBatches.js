@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import batchData from "../scheduled.json";
 import wholeSalerData from "../wholesaler.json";
 import "../Miscellaneous/OngoingBatches.css";
+import { AuthContext } from "../Context/AuthContext";
+import { ContractContext } from "../Context/ContractContext";
+import { useContext } from "react";
+import CONSTANTS from "../Utils/Constants";
 import {
   AppBar,
   Button,
@@ -28,7 +32,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 const ScheduledBatches = () => {
-  const [batches, setBatches] = useState(batchData);
+  const { batches, Services, medicines } = useContext(ContractContext);
+  let { account } = useContext(AuthContext);
+
+  const [ScheduledBatches, setScheduledBatches] = useState([]);
+  // const [batches, setBatches] = useState(batchData);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("md");
   const [openDialog, setOpenDialog] = useState(false);
@@ -37,6 +45,49 @@ const ScheduledBatches = () => {
   const [selectedTransporter, setSelectedTransporter] = useState(null);
   const [selectedInspector, setSelectedInspector] = useState(null);
   const [selectedWholesaler, setSelectedWholesaler] = useState(null);
+  const [selectscore, setSelectScore] = useState([]);
+  // const [scored, setScored] = useState([]);
+
+  useEffect(() => {
+    setData();
+  }, [batches, medicines]);
+
+  const setData = async () => {
+    if (!batches || !account || !medicines) return;
+
+    console.log("batchessssssss: ",batches);
+
+    const updatedBatches = batches
+      .filter((item) => item.manufacturerId === account &&  item.stage === 0).map((item) => {
+        const updatedMedicines = item.medicines.map((medicine) => {
+          const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);
+          if (matchedMedicine) {
+            return {
+              ...matchedMedicine,
+              quantity: medicine.quantity,
+            };
+          } else {
+            return medicine;
+          }
+        });
+        console.log("updatedMedicines: ", updatedMedicines);
+        const firstMedicineWithIpfs = medicines.map((item)=>item.medicineId===updatedMedicines[0].medicineId?item.ipfs_hash:null).filter((item)=>item!==null)[0];
+
+        // Find the first medicine with a matching ipfs_hash
+        // const firstMedicineWithIpfs = updatedMedicines[0].ipfs_hash;
+        // console.log("firstMedicineWithIpfs: ", firstMedicineWithIpfs);
+
+        return {
+          ...item,
+          medicines: updatedMedicines,
+          ipfs_hash: firstMedicineWithIpfs ? firstMedicineWithIpfs : '',
+        };
+      });
+    console.log("updatedBatches: ", updatedBatches.medicines);
+
+    setScheduledBatches(updatedBatches);
+  };
+
   const handleOpenDialog = (batch) => {
     setSelectedBatch(batch);
     setSelectedTransporter(null); // Reset selected transporter
@@ -52,6 +103,11 @@ const ScheduledBatches = () => {
   const handleSendPackage = () => {
     setOpenDialog(false);
   };
+  // useEffect(() => {
+  //   const sortedBatches = [...ScheduledBatches]; // Create a copy of batches array
+  //   sortedBatches.sort((a, b) => a.score - b.score); // Sort in descending order by score
+  //   setScheduledBatches(sortedBatches);
+  // }, [batches]);
   return (
     <div>
       <div class="searchBox">
@@ -137,149 +193,53 @@ const ScheduledBatches = () => {
 
       <div className="allcards">
         {searchValue === ""
-          ? batches.map((batch, index) => (
+          ? ScheduledBatches.map((batch, index) => (
             <div
               className="card"
               key={index}
-              onClick={() => handleOpenDialog(batch)}
               style={{ cursor: "pointer" }}
             >
               <div className="remove-when-use">
-                <img src={batch.batchpic} alt="pic" />
+                <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
               </div>
               <div className="details">
                 <p>Score: {batch.score}</p>
-                <div style={{ display: "flex" }}>
-                  {batch.materialname.map((e, materialIndex) => (
-                    <div key={materialIndex}>
-                      {materialIndex + 1}:{e}
+                <div style={{ display: "flex", flexDirection: "row", gap: "1rem", justifyContent: "center" }}>
+                  {batch.medicines && batch.medicines.map((item, index) => (
+                    <div key={index} >
+                      {item.name}: {item.quantity}
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           ))
-          : batches
+          : ScheduledBatches
             .filter((item) => item.score === parseInt(searchValue))
             .map((batch, index) => (
               <div
                 className="card"
                 key={index}
-                onClick={() => handleOpenDialog(batch)}
                 style={{ cursor: "pointer" }}
               >
                 <div className="remove-when-use">
-                  <img src={batch.batchpic} alt="pic" />
+                  <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
                 </div>
                 <div className="details">
                   <p>Score: {batch.score}</p>
-                  <div style={{ display: "flex" }}>
-                    {batch.materialname.map((e, materialIndex) => (
-                      <div key={materialIndex}>
-                        {materialIndex + 1}:{e}
-                      </div>
-                    ))}
+                  <div style={{ display: "flex", flexDirection: "row", gap: "1rem", justifyContent: "center" }}>
+                  {batch.medicines && batch.medicines.map((item, index) => (
+                    <div key={index} >
+                      {item.name}: {item.quantity}
+                    </div>
+                  ))}
                   </div>
                 </div>
               </div>
             ))}
       </div>
-      <Dialog
-        fullScreen
-        TransitionComponent={Transition}
-        open={openDialog}
-        onClose={handleCloseDialog}
-        sx={{ backdropFilter: "blur(20px)" }}
-      >
-        <AppBar sx={{ position: "relative" }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleCloseDialog}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Batch Details
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
-        <DialogContent>
-          {selectedBatch && (
-            <Card sx={{ marginBottom: "16px", width: "100%" }}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={selectedBatch.batchpic}
-                  alt="material"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Score : {selectedBatch.score}
-                  </Typography>
-
-                  <Typography variant="body2" color="text.secondary">
-                    {selectedBatch.materialname.map((e, materialIndex) => (
-                      <div key={materialIndex}>
-                        {e} : {selectedBatch.materialquantity[materialIndex]} Kg
-                      </div>
-                    ))}
-                  </Typography>
-                  <Divider sx={{ marginTop: "10px", marginBottom: "24px" }} />
-                  <div>
-                    {selectedBatch &&
-                      selectedBatch.transporter.map((transporter) => (
-                        <Card
-                          key={transporter.id}
-                          sx={{ marginBottom: "16px" }}
-                        >
-                          <CardHeader
-                            title={transporter.name}
-                            subheader={transporter.address}
-                          />
-                        </Card>
-                      ))}
-                  </div>
-                  <div>
-                    {selectedBatch &&
-                      selectedBatch.inspector.map((inspector) => (
-                        <Card key={inspector.id} sx={{ marginBottom: "16px" }}>
-                          <CardHeader
-                            title={inspector.name}
-                            subheader={inspector.address}
-                          />
-                        </Card>
-                      ))}
-                  </div>
-                  <div>
-                    {selectedBatch &&
-                      selectedBatch.wholesaler.map((wholesaler) => (
-                        <Card key={wholesaler.id} sx={{ marginBottom: "16px" }}>
-                          <CardHeader
-                            title={wholesaler.name}
-                            subheader={wholesaler.address}
-                          />
-                        </Card>
-                      ))}
-                  </div>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          )}
-          <Divider />
-          <div>
-            <Timeline />
-          </div>
-          <Divider />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
 
 export default ScheduledBatches;
-

@@ -34,7 +34,7 @@
   color: white;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(53, 144, 0); /* Darken background */
   position: absolute;
   bottom: 0;
   height: 2.6em;
@@ -62,18 +62,6 @@
   transform: scale(1.05); /* Enlarge on hover */
 }
 
-.details {
-  color: white;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Darken background */
-  position: absolute;
-  bottom: 0;
-  height: 3em; /* Increased height for more content */
-  transition: height 0.5s ease-in-out, background-color 0.3s ease-in-out; /* Add background transition */
-  padding: 1em; /* Increased padding */
-  overflow: hidden;
-}
 
 .details p {
   font-size: 1em; /* Increase font size */

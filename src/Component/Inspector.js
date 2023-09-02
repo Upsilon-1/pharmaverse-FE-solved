@@ -13,7 +13,6 @@ import List from "@mui/material/List";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Tab, Tabs } from "@mui/material";
 import InspectorListCardRequests from "../Miscellaneous/InspectorListCardRequests";
 import InspectorListCardSent from "../Miscellaneous/InspectorListCardSent";
 import Logo from "../Images/logoPharma.png";
@@ -23,6 +22,9 @@ import { useEffect, useContext } from "react";
 import { ContractContext } from "../Context/ContractContext";
 import { AuthContext } from "../Context/AuthContext";
 import { useAccount } from "wagmi";
+import { Link } from "react-router-dom";
+import { Button, Hidden, Tab, Tabs } from "@mui/material";
+
 
 const drawerWidth = 240;
 function TabPanel(props) {
@@ -59,7 +61,7 @@ function a11yProps(index) {
 }
 function ResponsiveDrawer(props) {
 
-  const { packages, Services, rawMaterials, batches, medicines, batchreports,packagereports } = useContext(ContractContext);
+  const { packages, Services, rawMaterials, batches, medicines, batchreports, packagereports } = useContext(ContractContext);
   const { authenticate, deauthenticate, account, role } = React.useContext(AuthContext);
 
   const { window } = props;
@@ -69,7 +71,7 @@ function ResponsiveDrawer(props) {
   const [SentPackageRequestData, setSentPackageRequestData] = React.useState([]);
   const [ReceivedBatchRequestData, setReceivedBatchRequestData] = React.useState([]);
   const [SentBatchRequestData, setSentBatchRequestData] = React.useState([]);
-  
+
   useAccount({
     onConnect: async (accounts) => {
       console.log(accounts.address);
@@ -88,7 +90,7 @@ function ResponsiveDrawer(props) {
   });
   useEffect(() => {
     setData();
-  }, [packages,batches,account]);
+  }, [packages, batches, account]);
 
   const setData = async () => {
     if (!packages || !account || !batches) return;
@@ -113,21 +115,21 @@ function ResponsiveDrawer(props) {
         const ipfsHash = rawMaterial ? rawMaterial.ipfs_hash : ""; // Get the ipfs_hash if rawMaterial exists
         const report = packagereports.find((rm) => rm.packageId === item.packageid); // Find the raw material with matching id
 
-        console.log("report"+report);
+        console.log("report" + report);
 
 
-        return { ...item, ipfs_hash: ipfsHash, grade: report.grade}; // Merge ipfs_hash into the package data
+        return { ...item, ipfs_hash: ipfsHash, grade: report.grade }; // Merge ipfs_hash into the package data
       });
 
-      console.log("aaaaaaaaaaaa"+sentRequestsPackage);
+    console.log("aaaaaaaaaaaa" + sentRequestsPackage);
 
     setSentPackageRequestData(sentRequestsPackage);
 
 
     // *********************
-    console.log("batches: ",batches);
+    console.log("batches: ", batches);
     const sentRequestsBatch = batches
-      .filter((item) => item.inspectorId === account && item.InspectionStage === 3 ) // 
+      .filter((item) => item.inspectorId === account && item.InspectionStage === 3) // 
       .map((item) => {
         const medicineId = item.medicines[0].medicineId; // Get the medicineId from the first object
         const medicine = medicines.find((rm) => rm.medicineId === medicineId); // Find the medicine with matching id
@@ -146,10 +148,10 @@ function ResponsiveDrawer(props) {
     });
 
     setSentBatchRequestData(updatedSentBatchRequestData);
-    console.log("updatedSentBatchRequestData: ",updatedSentBatchRequestData);
+    console.log("updatedSentBatchRequestData: ", updatedSentBatchRequestData);
 
     const receivedRequestsBatch = batches
-      .filter((item) => item.inspectorId === account && item.InspectionStage !== 3 )  // 
+      .filter((item) => item.inspectorId === account && item.InspectionStage !== 3)  // 
       .map((item) => {
         const medicineId = item.medicines[0].medicineId; // Get the materialId from the first object
 
@@ -161,10 +163,10 @@ function ResponsiveDrawer(props) {
         return { ...item, ipfs_hash: ipfsHash }; // Merge ipfs_hash into the batch data
       });
     setReceivedBatchRequestData(receivedRequestsBatch);
-    console.log("receivedRequestsBatch: ",receivedRequestsBatch);
+    console.log("receivedRequestsBatch: ", receivedRequestsBatch);
   }
 
-  console.log("SentPackageRequestData"+SentPackageRequestData)
+  console.log("SentPackageRequestData" + SentPackageRequestData)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -260,19 +262,28 @@ function ResponsiveDrawer(props) {
         <Toolbar
           sx={{
             display: "flex",
-            justifyContent: { xs: "space-between", sm: "flex-end" },
+            justifyContent: "space-between",
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <ConnectButton />
+          <Hidden smUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <div style={{ display: "flex", alignItems: "center", gap:"0.5rem"  }}>
+            <Link to="/" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Home</Button></Link>
+            <Link to="/contact" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Contact Us</Button></Link>
+
+          </div>
+          <div>
+            <ConnectButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Box
@@ -323,10 +334,10 @@ function ResponsiveDrawer(props) {
         <Toolbar />
         <Typography paragraph>
           <TabPanel value={value} index={0}>
-            <div className="card-container">
+            <div className="card-container" >
               {ReceivedPackageRequestData.map((data, index) => (
-                  <InspectorListCardRequests key={index} data={data} />
-                ))}
+                <InspectorListCardRequests key={index} data={data} />
+              ))}
               {/* {transporterPage
                 .filter((data) => !data["send-package"])
                 .map((data, index) => (
@@ -337,8 +348,8 @@ function ResponsiveDrawer(props) {
           <TabPanel value={value} index={1}>
             <div className="card-container">
               {SentPackageRequestData.map((data, index) => (
-                  <InspectorListCardSent key={index} data={data} />
-                ))}
+                <InspectorListCardSent key={index} data={data} />
+              ))}
               {/* {transporterPage
                 .filter((data) => data["send-package"])
                 .map((data, index) => (

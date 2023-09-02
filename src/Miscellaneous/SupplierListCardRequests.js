@@ -167,7 +167,7 @@ export default function SupplierListCardRequests({ data }) {
   };
 
   return (<>
-  <Loader isloading={isloading} />
+  <Loader isLoading={isloading} />
     {!isloading && (
     <Fade bottom>
       <Card sx={{ maxWidth: 363, borderRadius: "24px", borderColor: "white" }}>

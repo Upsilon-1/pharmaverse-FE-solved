@@ -6,8 +6,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import InboxIcon from "@mui/icons-material/MoveToInbox"
+import {  Hidden } from "@mui/material";
 import List from "@mui/material/List";
+import { Link } from "react-router-dom";
+
 import ListItem from "@mui/material/ListItem";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -74,10 +77,10 @@ function ResponsiveDrawer(props) {
       console.log(accounts.address);
 
       const res = await Services.get_role(accounts.address);
-      if(res.success){
-        authenticate(accounts.address,res.data);
+      if (res.success) {
+        authenticate(accounts.address, res.data);
       }
-      else{
+      else {
         authenticate(accounts.address, '');
       }
     },
@@ -178,19 +181,29 @@ function ResponsiveDrawer(props) {
         <Toolbar
           sx={{
             display: "flex",
-            justifyContent: { xs: "space-between", sm: "flex-end" },
+            justifyContent: "space-between",
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <ConnectButton />
+          <Hidden smUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <div style={{ display: "flex", alignItems: "center", gap:"0.5rem" }}>
+            <Link to="/" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Home</Button></Link>
+            <Link to="/contact" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Contact Us</Button></Link>
+
+            <Link to="/supplier" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Supplier</Button></Link>
+          </div>
+          <div>
+            <ConnectButton />
+          </div>
         </Toolbar>
       </AppBar>
 

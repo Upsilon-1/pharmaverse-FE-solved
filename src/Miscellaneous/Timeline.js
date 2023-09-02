@@ -523,13 +523,17 @@ const Timeline = ({ batch, role }) => {
 
   const StageOneCompleted = async () => {
     setisLoading(true)
-    const response = await Services.update_batch_inspection_state(batch.batchId, 1);
+    const response = await Services.update_batch_state(batch.batchId, 1);
 
     if (response.success) {
       console.log("Stage 1 completed");
+      alert.success("Batch stage updated succesfully");
+
       setStageOne(true);
     }
     else {
+      alert.error("Error in updating batch stage");
+
       console.log("Error" + response.message);
     }
 
@@ -538,13 +542,18 @@ const Timeline = ({ batch, role }) => {
   };
   const StageTwoCompleted = async () => {
     setisLoading(true)
-    const response = await Services.update_batch_inspection_state(batch.batchId, 2);
+    const response = await Services.update_batch_state(batch.batchId, 2);
 
     if (response.success) {
       console.log("Stage 2 completed");
+      alert.success("Batch stage updated succesfully");
       setStageTwo(true);
+      
+
     }
     else {
+      alert.error("Error in updating batch stage");
+
       console.log("Error" + response.message);
     }
 
@@ -554,13 +563,17 @@ const Timeline = ({ batch, role }) => {
 
   const StageThreeCompleted = async () => {
     setisLoading(true)
-    const response = await Services.update_batch_inspection_state(batch.batchId, 3);
+    const response = await Services.update_batch_state(batch.batchId, 3);
 
     if (response.success) {
       console.log("Stage 3 completed");
+      alert.success("Batch stage updated succesfully");
+
       setStageThree(true);
+
     }
     else {
+      alert.error("Error in updating batch stage");
       console.log("Error" + response.message);
     }
 
@@ -569,15 +582,20 @@ const Timeline = ({ batch, role }) => {
   };
 
   const StageOneInspectionCompleted = async () => {
+    setOpenDialog(false);
     setisLoading(true)
-    const response = await Services.record_batch_report(batch.batchId, 1,);
+    const response = await Services.update_batch_inspection_state(batch.batchId, 1);
 
     if (response.success) {
+      alert.success("Inspection stage updated successfully");
       setStageOneInspection(true);
-      setOpenDialog(false);
+     
       setSelectedStage(null);
     }
     else {
+    setisLoading(false)
+    alert.error("Error in inspecting the batch");
+
       console.log("Error" + response.message);
       handleCloseDialog();
     }
@@ -591,14 +609,24 @@ const Timeline = ({ batch, role }) => {
   };
 
   const StageTwoInspectionCompleted = async () => {
+    setOpenDialog(false);
+    setisLoading(true)
+
     const response = await Services.update_batch_inspection_state(batch.batchId, 2);
 
     if (response.success) {
+    setisLoading(false)
+
+      alert.success("Inspection stage updated successfully");
+
       setStageTwoInspection(true);
       setOpenDialog(false);
       setSelectedStage(null);
     }
     else {
+    setisLoading(false)
+    alert.error("Error in inspecting the batch");
+
       console.log("Error" + response.message);
       handleCloseDialog();
     }
@@ -608,15 +636,23 @@ const Timeline = ({ batch, role }) => {
     setSelectedStage(null);
   };
   const StageThreeInspectionCompleted = async () => {
+    setOpenDialog(false);
     setisLoading(true)
     const response = await Services.update_batch_inspection_state(batch.batchId, 3);
 
     if (response.success) {
+    setisLoading(false)
+
+      alert.success("Inspection stage updated successfully");
+
       setStageThreeInspection(true);
       setOpenDialog(false);
       setSelectedStage(null);
     }
     else {
+    setisLoading(false)
+    alert.error("Error in inspecting the batch");
+
       console.log("Error" + response.message);
       handleCloseDialog();
     }
@@ -647,13 +683,10 @@ const Timeline = ({ batch, role }) => {
             Manufacturer ID : {batch && batch.manufacturerId}
           </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          In the pre-production phase, detailed planning and preparation occur before actual manufacturing. This stage involves tasks such as:
+Design and Planning: Creating product blueprints, specifications, and production schedules.Raw Material Procurement: Sourcing and quality-checking raw materials required for production.Equipment Setup: Preparing and configuring machinery and tools for production.
+Workforce Training: Training workers on production procedures and safety protocols.
+Quality Assurance: Establishing quality control measures to ensure the final product meets standards.
           </p>
         </VerticalTimelineElement>
         <VerticalTimelineElement
@@ -670,13 +703,7 @@ const Timeline = ({ batch, role }) => {
             Manufacturer ID : {batch.manufacturerId}
           </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          In Stage 1, the manufacturing process initiates with the conversion of raw materials into primary product components. This phase sets the foundation for the entire production cycle, involving activities like ingredient mixing, shaping, and preliminary quality checks.
           </p>
           <Stack
             direction="row"
@@ -720,13 +747,7 @@ const Timeline = ({ batch, role }) => {
             {stageOneGrade ? `${stageOneGrade} (out of 10)` : "Yet to be Inspected"}
           </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          The grading system helps manufacturers maintain consistent quality standards by identifying deviations from ideal conditions early in the production process. It allows for timely adjustments, reducing the risk of producing substandard or unsafe products. The deviation is used to determine the batch's grade. A smaller deviation results in a higher grade, indicating that the batch closely matches the ideal conditions. Conversely, a larger deviation leads to a lower grade, suggesting that the batch deviates significantly from the desired parameters.
           </p>
           <Stack
             direction="row"
@@ -763,13 +784,13 @@ const Timeline = ({ batch, role }) => {
             Manufacturer ID : {batch.manufacturerId}
           </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          This is the primary manufacturing phase where the actual production of goods takes place.
+Activities:
+Raw Material Processing: Using raw materials to create products.
+Assembly: Assembling components and parts into finished products.
+Quality Control: Continuously monitoring and ensuring product quality.
+Workforce Management: Managing workers and production teams.
+Output Management: Tracking and storing finished products.
           </p>
           <Stack
             direction="row"
@@ -812,13 +833,7 @@ const Timeline = ({ batch, role }) => {
 
           </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          The grading system helps manufacturers maintain consistent quality standards by identifying deviations from ideal conditions early in the production process. It allows for timely adjustments, reducing the risk of producing substandard or unsafe products. The deviation is used to determine the batch's grade. A smaller deviation results in a higher grade, indicating that the batch closely matches the ideal conditions. Conversely, a larger deviation leads to a lower grade, suggesting that the batch deviates significantly from the desired parameters.
           </p>
           <Stack
             direction="row"
@@ -857,13 +872,11 @@ const Timeline = ({ batch, role }) => {
             Manufacturer ID : {batch.manufacturerId}
           </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          Packaging and labeling involve preparing products for distribution and sale.
+Activities:
+Packaging: Choosing appropriate packaging materials and methods.
+Labeling: Creating labels with product information.
+Product Presentation: Ensuring products are well-presented.
           </p>
           <Stack
             direction="row"
@@ -906,13 +919,7 @@ const Timeline = ({ batch, role }) => {
 
           </h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          The grading system helps manufacturers maintain consistent quality standards by identifying deviations from ideal conditions early in the production process. It allows for timely adjustments, reducing the risk of producing substandard or unsafe products. The deviation is used to determine the batch's grade. A smaller deviation results in a higher grade, indicating that the batch closely matches the ideal conditions. Conversely, a larger deviation leads to a lower grade, suggesting that the batch deviates significantly from the desired parameters.
           </p>
           <Stack
             direction="row"

@@ -34,6 +34,7 @@ import { ContractContext } from "../Context/ContractContext";
 import { AuthContext } from "../Context/AuthContext";
 import CONSTANTS from "../Utils/Constants";
 import Loader from './Loader/Loader';
+import { useAlert } from "react-alert";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -143,6 +144,7 @@ const grey = {
   900: "#1A2027",
 };
 const CreateNewBatch = ({ jsonData }) => {
+  const alert = useAlert();
   const [selectedRows, setSelectedRows] = useState([]);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("md");

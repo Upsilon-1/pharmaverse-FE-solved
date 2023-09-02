@@ -13,6 +13,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ListItemText from "@mui/material/ListItemText";
+import { Button, Tab, Tabs } from "@mui/material";
+import Hidden from "@mui/material/Hidden";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import { ContractContext } from "../Context/ContractContext";
 import { useAccount } from "wagmi";
@@ -21,7 +24,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Inventory from "../Component/Inventory";
-import { Tab, Tabs } from "@mui/material";
 import ChemicalListChart from "../Miscellaneous/ChemicalLineChart";
 import ChemicalList from "../Miscellaneous/ChemicalList";
 import TopChemicals from "../Miscellaneous/TopChemicals";
@@ -82,10 +84,10 @@ function ResponsiveDrawer(props) {
       console.log(accounts.address);
 
       const res = await Services.get_role(accounts.address);
-      if(res.success){
-        authenticate(accounts.address,res.data);
+      if (res.success) {
+        authenticate(accounts.address, res.data);
       }
-      else{
+      else {
         authenticate(accounts.address, '');
       }
     },
@@ -211,19 +213,28 @@ function ResponsiveDrawer(props) {
         <Toolbar
           sx={{
             display: "flex",
-            justifyContent: { xs: "space-between", sm: "flex-end" },
+            justifyContent: "space-between",
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <ConnectButton />
+          <Hidden smUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <div style={{ display: "flex", alignItems: "center", gap:"0.5rem" }}>
+            <Link to="/" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Home</Button></Link>
+            <Link to="/contact" style={{ textDecoration: "none" }}><Button variant="contained" color="success">Contact Us</Button></Link>
+
+          </div>
+          <div>
+            <ConnectButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Box
@@ -237,7 +248,7 @@ function ResponsiveDrawer(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, 
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
