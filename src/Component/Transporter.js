@@ -138,7 +138,7 @@ function ResponsiveDrawer(props) {
     setSentPackageRequestData(sentRequestsPackage);
 
     const sentRequestsBatch = batches
-      .filter((item) => item.transporterId === account && item.stage === 4 && item.InspectionStage === 4) //  
+      .filter((item) => item.transporterId === account && item.InspectionStage === 3) //  
       .map((item) => {
         const medicineId = item.medicines[0].materialId; // Get the materialId from the first object
         const medicine = medicines.find((rm) => rm.medicineId === medicineId); // Find the medicine with matching id
@@ -151,7 +151,7 @@ function ResponsiveDrawer(props) {
     console.log("sentRequestsBatch: ", sentRequestsBatch);
 
     const receivedRequestsBatch = batches
-      .filter((item) => item.transporterId === account) //  && item.stage === 5 && item.InspectionStage === 4
+      .filter((item) => item.transporterId === account && item.stage === 5) 
       .map((item) => {
         const medicineId = item.medicines[0].materialId; // Get the materialId from the first object
         const medicine = medicines.find((rm) => rm.medicineId === medicineId); // Find the medicine with matching id

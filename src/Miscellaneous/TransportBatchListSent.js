@@ -90,7 +90,7 @@ export default function TransportBatchListSent({ data }) {
 
   return (
     <Fade bottom>
-      <>
+      <div className="card-container">
         {data.map((batch, index) => (
           <Card
             sx={{ maxWidth: 363, borderRadius: "24px", borderColor: "white" }}
@@ -207,7 +207,7 @@ export default function TransportBatchListSent({ data }) {
             </Dialog>
           </Card>
         ))}
-      </>
+      </div>
     </Fade>
   );
 }
