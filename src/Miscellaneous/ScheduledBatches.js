@@ -197,11 +197,11 @@ const ScheduledBatches = () => {
             <div
               className="card"
               key={index}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer" , backgroundImage: `url(${CONSTANTS.IPFSURL}/${batch.ipfs_hash})`,backgroundSize: "cover"}}
             >
-              <div className="remove-when-use">
+              {/* <div className="remove-when-use">
                 <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
-              </div>
+              </div> */}
               <div className="details">
                 <p>Score: {batch.score}</p>
                 <div style={{ display: "flex", flexDirection: "row", gap: "1rem", justifyContent: "center" }}>
