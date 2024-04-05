@@ -202,7 +202,7 @@ const OngoingBatches = () => {
                 <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
               </div>
               <div className="details">
-                <p>Stage: {batch.stage}</p>
+                <p>Batch ID : {batch.batchId}  and  Stage : {batch.stage}</p>
               </div>
             </div>
           ))
