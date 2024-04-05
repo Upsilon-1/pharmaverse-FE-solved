@@ -1,7 +1,7 @@
 import { create } from 'ipfs-http-client';
 import { Buffer } from 'buffer';
-const projectId = "2NKrBI1kOXqIoQI9AKldOjK6eqI";
-const projectSecret = "ec1c887351c1c0c40a9ad2b9cab08ded";
+const projectId = `${process.env.REACT_APP_IPFS_PROJECT_ID}`;
+const projectSecret = `${process.env.REACT_APP_IPFS_PROJECT_SECRET}`;
 
 const auth =
     'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');

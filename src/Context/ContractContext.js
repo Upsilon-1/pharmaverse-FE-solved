@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { createContext, useState, useContext } from "react";
 import { AuthContext } from "./AuthContext";
 import GetContract from "../Utils/GetContract";
-// import { ethers } from "ethers";
 import { Buffer } from 'buffer';
 
 
@@ -390,14 +389,8 @@ function ContractContextProvider(props) {
                 // console.log("materialId: ", materialId);
                 // console.log("additionalQuantity: ", additionalQuantity);
 
-                // materialId = ethers.BigNumber.from(materialId);
-                // additionalQuantity = ethers.BigNumber.from(additionalQuantity);
-
                 console.log("materialId: ", materialId);
                 console.log("additionalQuantity: ", additionalQuantity);
-
-                // const materialId = ethers.parseUnits(materialId.toString(), 18);
-                // const additionalQuantity = ethers.parseUnits(additionalQuantity.toString(), 18);
 
                 // const rawData = await InventoryContract.methods
                 //     .increaseQuantity(materialId, additionalQuantity).encodeABI();
