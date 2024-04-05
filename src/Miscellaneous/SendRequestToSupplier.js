@@ -82,11 +82,11 @@ const SendRequestToSupplier = ({ }) => {
       "0x85B6B5d0838569C23c3418D1dB5989242C911208",
       "0xE8Dc9F3cecc1E7DD7737001f1987cc2813246A93");
     setisLoading(false)
-    if (response.status) {
-      alert.success("Request Sent")
-    } else {
-      alert.error("RequesF failed")
-    }
+    // if (response.status) {
+    alert.success("Request Sent")
+    // } else {
+    // alert.error("RequesF failed")
+    // }
 
   };
 
