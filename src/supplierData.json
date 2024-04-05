@@ -1,0 +1,33 @@
+[
+    {
+      "id": "S123",
+      "name": "Supplier A",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
+      "image": "/path/to/supplierA.jpg"
+    },
+    {
+      "id": "S124",
+      "name": "Supplier B",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
+      "image": "/path/to/supplierB.jpg"
+    },
+    {
+      "id": "S125",
+      "name": "Supplier C",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
+      "image": "/path/to/supplierC.jpg"
+    },
+    {
+      "id": "S126",
+      "name": "Supplier D",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
+      "image": "/path/to/supplierD.jpg"
+    },
+    {
+      "id": "S127",
+      "name": "Supplier E",
+      "address": "0x85B6B5d0838569C23c3418D1dB5989242C911208",
+      "image": "/path/to/supplierE.jpg"
+    }
+  ]
+  
