@@ -91,7 +91,7 @@ export default function InspectorBatchCardSent({ data }) {
 
   return (
     <Fade bottom>
-      <>
+      <div className="card-container">
         {data.map((batch, index) => (
           <div>
             {data.length > 0 ? (<Card
@@ -113,7 +113,7 @@ export default function InspectorBatchCardSent({ data }) {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Stack spacing={0.2}>
+                <Stack spacing={0.2} direction="row">
                   <Grid item xs={12} sm={6}>
                     <Button
                       fullWidth
@@ -248,7 +248,7 @@ export default function InspectorBatchCardSent({ data }) {
 
           </div>
         ))}
-      </>
+     </div>
     </Fade>
   );
 }
