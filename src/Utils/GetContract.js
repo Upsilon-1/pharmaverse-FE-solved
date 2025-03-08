@@ -50,16 +50,16 @@ const GetContract = async () => {
   );
 
 
-  // console.log("Admin contract:", AdminContract);
-  // console.log("Inventory contract:", InventoryContract);
-  // console.log("Supplier contract:", SupplierContract);
-  // console.log("Inspector contract:", InspectorContract);
-  // console.log("Manufacturer contract:", ManufacturerContract);
-  // console.log("BatchScheduler contract:", BatchSchedulerContract);
-  // console.log("RealTimeMonitoring contract:", RealTimeMonitoringContract);
-  // console.log("Transporter contract:", TransporterContract);
+  console.log("Admin contract:", AdminContract);
+  console.log("Inventory contract:", InventoryContract);
+  console.log("Supplier contract:", SupplierContract);
+  console.log("Inspector contract:", InspectorContract);
+  console.log("Manufacturer contract:", ManufacturerContract);
+  console.log("BatchScheduler contract:", BatchSchedulerContract);
+  console.log("RealTimeMonitoring contract:", RealTimeMonitoringContract);
+  console.log("Transporter contract:", TransporterContract);
 
-  // console.log("Get contarct end");
+  console.log("Get contarct end");
   
   return {
     success: true,

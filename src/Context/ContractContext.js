@@ -92,8 +92,9 @@ function ContractContextProvider(props) {
     }, []);
 
     const getContract = async () => {
+        console.log("getContract called",);
         const contractResult = await GetContract();
-        // console.log("contractResult", contractResult.data);
+        console.log("contractResult", contractResult.data);
         updateContract(contractResult.data);
     };
 
