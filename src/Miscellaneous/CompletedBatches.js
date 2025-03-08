@@ -264,11 +264,13 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
               className="card"
               key={index}
               onClick={() => handleOpenDialog(batch)}
-              style={{ cursor: "pointer" }}
+              style={{
+                cursor: "pointer",
+                backgroundImage: `url(${CONSTANTS.IPFSURL}/${batch.ipfs_hash})`,
+                backgroundSize: "cover",
+              }}
             >
-              <div className="remove-when-use">
-                <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
-              </div>
+            
               <div className="details" >
                 <p>Grade: 4</p>
               </div>
@@ -282,11 +284,13 @@ const CompletedBatches = ({ isAdmin = false, isWholesaler = false }) => {
                 className="card"
                 key={index}
                 onClick={() => handleOpenDialog(batch)}
-                style={{ cursor: "pointer" }}
+                style={{
+                  cursor: "pointer",
+                  backgroundImage: `url(${CONSTANTS.IPFSURL}/${batch.ipfs_hash})`,
+                  backgroundSize: "cover",
+                }}
               >
-                <div className="remove-when-use">
-                  <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
-                </div>
+               
                 <div className="details">
                   <p>Grade: {batch.grade}</p>
                 </div>

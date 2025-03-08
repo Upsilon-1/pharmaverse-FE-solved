@@ -13,7 +13,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Link } from "react-router-dom";
-import { Button, Hidden } from "@mui/material";
+import { Button, Container, Hidden } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -282,10 +282,49 @@ function ResponsiveDrawer(props) {
                 .filter((data) => !data["send-package"])
                 .map((data, index) => (
                   <SupplierListCardRequests key={index} data={data} />
-                ))} */}
-              {ReceivedRequestData.map((data, index) => (
-                <SupplierListCardRequests key={index} data={data} />
-              ))}
+                ))} */}{ReceivedRequestData.map((data, index) => (
+  <div key={index}>
+  {data.length > 0 ? (
+    <SupplierListCardRequests key={index} data={data} />
+  ) : (
+    <React.Fragment>
+        <Container maxWidth="md" className="not-found-container">
+                  <div className="logo-container"></div>
+                  <div style={{ borderRadius: "24px" }}>
+                    <Typography
+                      variant="h2"
+                      className="not-found-title"
+                      color="white"
+                      sx={{ fontWeight: 700 }}
+                    ></Typography>
+                    <Typography
+                      variant="h4"
+                      className="not-found-subtitle"
+                      color="white"
+                      sx={{ marginBottom: "8px", fontWeight: 700 }}
+                    >
+                      Oops! No Requests Found
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className="not-found-message"
+                      color="white"
+                      sx={{
+                        marginBottom: "24px",
+                        fontWeight: 700,
+                        paddingBottom: "12px",
+                      }}
+                    >
+                      The  Requests you are looking for might have been removed or is
+                      temporarily unavailable.
+                    </Typography>
+                  </div>
+                </Container>
+    </React.Fragment>
+  )}
+</div>
+))}
+
             </div>
           </TabPanel>
 

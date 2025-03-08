@@ -34,7 +34,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const OngoingBatches = () => {
-
   const { batches, Services, medicines } = useContext(ContractContext);
   let { account } = useContext(AuthContext);
 
@@ -56,9 +55,14 @@ const OngoingBatches = () => {
     if (!batches || !account || !medicines) return;
 
     const updatedBatches = batches
-      .filter((item) => item.manufacturerId === account &&  item.InspectionStage !== 3).map((item) => {
+      .filter(
+        (item) => item.manufacturerId === account && item.InspectionStage !== 3
+      )
+      .map((item) => {
         const updatedMedicines = item.medicines.map((medicine) => {
-          const matchedMedicine = medicines.find((m) => m.medicineId === medicine.medicineId);
+          const matchedMedicine = medicines.find(
+            (m) => m.medicineId === medicine.medicineId
+          );
           if (matchedMedicine) {
             return {
               ...matchedMedicine,
@@ -69,7 +73,13 @@ const OngoingBatches = () => {
           }
         });
         console.log("updatedMedicines: ", updatedMedicines);
-        const firstMedicineWithIpfs = medicines.map((item)=>item.medicineId===updatedMedicines[0].medicineId?item.ipfs_hash:null).filter((item)=>item!==null)[0];
+        const firstMedicineWithIpfs = medicines
+          .map((item) =>
+            item.medicineId === updatedMedicines[0].medicineId
+              ? item.ipfs_hash
+              : null
+          )
+          .filter((item) => item !== null)[0];
 
         // Find the first medicine with a matching ipfs_hash
         // const firstMedicineWithIpfs = updatedMedicines[0].ipfs_hash;
@@ -78,16 +88,13 @@ const OngoingBatches = () => {
         return {
           ...item,
           medicines: updatedMedicines,
-          ipfs_hash: firstMedicineWithIpfs ? firstMedicineWithIpfs : '',
+          ipfs_hash: firstMedicineWithIpfs ? firstMedicineWithIpfs : "",
         };
       });
     console.log("updatedBatches: ", updatedBatches);
 
     setOngoingBatches(updatedBatches);
   };
-
-
-
 
   const handleOpenDialog = (batch) => {
     setSelectedBatch(batch);
@@ -102,7 +109,6 @@ const OngoingBatches = () => {
     setOpenDialog(false);
   };
   const handleSendPackage = () => {
-
     setOpenDialog(false);
   };
   const sortedBatches = [...OngoingBatches].sort((a, b) => a.stage - b.stage);
@@ -192,35 +198,49 @@ const OngoingBatches = () => {
       <div className="allcards">
         {searchValue === ""
           ? sortedBatches.map((batch, index) => (
-            <div
-              className="card"
-              key={index}
-              onClick={() => handleOpenDialog(batch)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="remove-when-use">
-                <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
+              <div
+                className="card"
+                key={index}
+                onClick={() => handleOpenDialog(batch)}
+                style={{
+                  cursor: "pointer",
+                  backgroundImage: `url(${CONSTANTS.IPFSURL}/${batch.ipfs_hash})`,
+                  backgroundSize: "cover",
+                }}
+              >
+               
+                <div className="details">
+                  <p>
+                    Batch ID : {batch.batchId} and Stage : {batch.stage}
+                  </p>
+                </div>
               </div>
-              <div className="details">
-                <p>Batch ID : {batch.batchId}  and  Stage : {batch.stage}</p>
-              </div>
-            </div>
-          ))
-          : sortedBatches.filter((item) => item.currentstage === parseInt(searchValue)).map((batch, index) => (  //    
-            <div
-              className="card"
-              key={index}
-              onClick={() => handleOpenDialog(batch)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="remove-when-use">
-                <img src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`} alt="pic" />
-              </div>
-              <div className="details">
-                <p>Stage: {batch.stage}</p>
-              </div>
-            </div>
-          ))}
+            ))
+          : sortedBatches
+              .filter((item) => item.currentstage === parseInt(searchValue))
+              .map(
+                (
+                  batch,
+                  index //
+                ) => (
+                  <div
+                    className="card"
+                    key={index}
+                    onClick={() => handleOpenDialog(batch)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className="remove-when-use">
+                      <img
+                        src={`${CONSTANTS.IPFSURL}/${batch.ipfs_hash}`}
+                        alt="pic"
+                      />
+                    </div>
+                    <div className="details">
+                      <p>Stage: {batch.stage}</p>
+                    </div>
+                  </div>
+                )
+              )}
       </div>
 
       <Dialog
@@ -260,7 +280,6 @@ const OngoingBatches = () => {
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       Stage : {selectedBatch.stage}
-
                     </Typography>
 
                     {selectedBatch.medicines.map((item, materialIndex) => (
@@ -271,9 +290,7 @@ const OngoingBatches = () => {
 
                     <Divider sx={{ marginTop: "10px", marginBottom: "24px" }} />
                     <div>
-                      <Card
-                        sx={{ marginBottom: "16px" }}
-                      >
+                      <Card sx={{ marginBottom: "16px" }}>
                         <CardHeader
                           title="Transporter"
                           subheader={selectedBatch.transporterId}
@@ -306,7 +323,6 @@ const OngoingBatches = () => {
               <Divider />
             </>
           )}
-
         </DialogContent>
       </Dialog>
     </div>
