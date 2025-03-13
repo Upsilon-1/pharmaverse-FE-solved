@@ -284,7 +284,7 @@ function ResponsiveDrawer(props) {
                   <SupplierListCardRequests key={index} data={data} />
                 ))} */}{ReceivedRequestData.map((data, index) => (
   <div key={index}>
-  {data.length > 0 ? (
+  {data ? (
     <SupplierListCardRequests key={index} data={data} />
   ) : (
     <React.Fragment>
