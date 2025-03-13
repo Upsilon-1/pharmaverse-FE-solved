@@ -2,37 +2,37 @@
   {
     "id": "W123",
     "name": "Wholesaler A",
-    "address": "0x511F0e5A8495d7c7709f905186A01751D8b3f7C8",
+    "address": "0xadB7c741B21519b4664A3743D5edE7c1Bb0A0D70",
     "image": "/path/to/wholesalerA.jpg"
   },
   {
     "id": "W124",
     "name": "Wholesaler B",
-    "address": "0x511F0e5A8495d7c7709f905186A01751D8b3f7C8",
+    "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
     "image": "/path/to/wholesalerB.jpg"
   },
   {
     "id": "W125",
     "name": "Wholesaler C",
-    "address": "0x511F0e5A8495d7c7709f905186A01751D8b3f7C8",
+    "address": "0xadB7c741B21519b4664A3743D5edE7c1Bb0A0D70",
     "image": "/path/to/wholesalerC.jpg"
   },
   {
     "id": "W126",
     "name": "Wholesaler D",
-    "address": "0x511F0e5A8495d7c7709f905186A01751D8b3f7C8",
+    "address": "0xadB7c741B21519b4664A3743D5edE7c1Bb0A0D70",
     "image": "/path/to/wholesalerD.jpg"
   },
   {
     "id": "W127",
     "name": "Wholesaler E",
-    "address": "0x511F0e5A8495d7c7709f905186A01751D8b3f7C8",
+    "address": "0xadB7c741B21519b4664A3743D5edE7c1Bb0A0D70",
     "image": "/path/to/wholesalerE.jpg"
   },
   {
     "id": "W128",
     "name": "Wholesaler F",
-    "address": "0x511F0e5A8495d7c7709f905186A01751D8b3f7C8",
+    "address": "0xadB7c741B21519b4664A3743D5edE7c1Bb0A0D70",
     "image": "/path/to/wholesalerF.jpg"
   }
 ]
