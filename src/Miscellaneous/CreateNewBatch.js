@@ -270,9 +270,9 @@ const CreateNewBatch = ({ jsonData }) => {
         // selectedInspector.id,
         // selectedTransporter.id,
         // selectedWholesaler.id,
-        "0x1bd317f31BdfcbE4E11a732afDBb92071d56392b",
-        "0xB22Ea0c940C9537B2B2C13e4dCaBc334DBAE2d05",
-        "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+        "0x2D52362963D9A8D8bD27Bc89d19dca013eB92356",
+        "0x5bE647fb574facd843dE2d5dDBca4d5458eda411",
+        "0xadB7c741B21519b4664A3743D5edE7c1Bb0A0D70"
 
       );
       console.log(response);

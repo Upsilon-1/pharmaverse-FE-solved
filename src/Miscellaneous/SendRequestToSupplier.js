@@ -78,9 +78,9 @@ const SendRequestToSupplier = ({ }) => {
 
 
     const response = await Services.request_raw_material_package(matids, quantities, "description",
-      "0xB22Ea0c940C9537B2B2C13e4dCaBc334DBAE2d05",
-      "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199",
-      "0x1bd317f31BdfcbE4E11a732afDBb92071d56392b");
+      "0x5bE647fb574facd843dE2d5dDBca4d5458eda411",
+      "0xeDe9f960f03c93163604a3689B1750B99E01eb28",
+      "0x2D52362963D9A8D8bD27Bc89d19dca013eB92356");
     setisLoading(false)
     // if (response.status) {
     alert.success("Request Sent")
